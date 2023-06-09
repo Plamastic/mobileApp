@@ -14,7 +14,7 @@ function Listcomplete({ route, navigation }) {
       return e.title;
     }).indexOf(data.dataNew.title),1,data.dataNew)
   }
-  const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, status, lecturer, date, description, join}) => ({title, status, lecturer, date, description, join}));
+  const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, status, lecturer, date, description, join, point}) => ({title, status, lecturer, date, description, join, point}));
   return (
     <View style={{ flex: 1}}>
       
@@ -46,6 +46,7 @@ const inforWorkCom = ({route, navigation}) => {
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
+      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text> {data.point}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Trạng thái:</Text> {data.status}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Giảng viên phụ trách:</Text> {data.lecturer}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Thời gian diễn ra:</Text> {data.date}</Text>
@@ -71,11 +72,13 @@ function AddWord({navigation}) {
   const [title, setTitle] = useState('')
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
+  const [point, setPoint] = useState(0)
   const data = {
     title: title,
     status: 'uncomplete',
     lecturer: lecturer,
-    description: description
+    description: description,
+    point: point
   }
   return(
     <ScrollView>
@@ -85,6 +88,13 @@ function AddWord({navigation}) {
           placeholder="Tiêu đề"
           onChangeText={title => setTitle(title)}
           value={title}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Điểm CTXH"
+          keyboardType = 'numeric'
+          onChangeText={point => setPoint(point)}
+          value={point}
         />
         <TextInput
           style={styles.input}
@@ -133,7 +143,7 @@ function Listincomplete({ route, navigation }) {
   }else{
     work.splice(data.index,1)
   }
-  const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, status, lecturer, date, description, join}) => ({title, status, lecturer, date, description, join}));
+  const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, status, lecturer, date, description, join, point}) => ({title, status, lecturer, date, description, join, point}));
   
   return (
     <View style={{ flex: 1}}>
@@ -170,6 +180,7 @@ function updateIndex({ route, navigation }){
   const [title, setTitle] = useState('')
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
+  const [point, setPoint] = useState(0)
   
   if(value==0){
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -187,6 +198,17 @@ function updateIndex({ route, navigation }){
               value={title}
             />
           </View> 
+        <Text style={{padding: 10, fontWeight: 600}}>Điểm CTXH:</Text>
+          <View style={styles.titleWork} >
+            <TextInput 
+              placeholder={item.point} 
+              onChangeText={(point) => {
+                setPoint(point)
+                item.point=point
+              }}
+              value={point}
+            />
+          </View>   
         <Text style={{padding: 10, fontWeight: 600}}>Trạng thái:</Text>
         <View style={styles.titleWork}>
           <ButtonGroup
@@ -351,6 +373,7 @@ const inforWork = ({ route,navigation }) => {
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
+      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text> {data.point}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Trạng thái:</Text> {data.status}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Giảng viên phụ trách:</Text> {data.lecturer}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Thời gian diễn ra:</Text> {data.date}</Text>
@@ -422,7 +445,8 @@ const work = [
     lecturer: 'Trương Đông Nam',
     date: '14/6/2321',
     description: 'sử dụng hàm navigate như trên, gửi kém biến bình thường.',
-    join: []
+    join: [],
+    point: 5
   },
   {
     title: 'Tình nguyện viên hè 2023 ',
@@ -430,7 +454,8 @@ const work = [
     lecturer: 'Nguyễn Thị Liệu',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: []
+    join: [],
+    point: 2
   },
   {
     title: 'Cộng tác viên bơi lội',
@@ -438,7 +463,8 @@ const work = [
     lecturer: 'Duy Nam',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: []
+    join: [],
+    point: 4
   },
   {
     title: 'Cộng tác viên bơi lội2',
@@ -446,7 +472,8 @@ const work = [
     lecturer: 'Nhật Minh',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: []
+    join: [],
+    point: 1
   },
 ];
 const Branch = [
@@ -552,47 +579,56 @@ const student = [
   {
     idStudent: '131728193',
     NameClass: '17DTH1',
-    NameStudent: 'Nguyen Van a'
+    NameStudent: 'Nguyen Van a',
+    point: 0
   },
   {
     idStudent: '13162817',
     NameClass: '17DTH1',
-    NameStudent: 'nguyen van b'
+    NameStudent: 'nguyen van b',
+    point: 0
   },
   {
     idStudent: '13148198',
     NameClass: '17NNA1',
-    NameStudent: 'vu thi a'
+    NameStudent: 'vu thi a',
+    point: 0
   },
   {
     idStudent: '131728145',
     NameClass: '17DTH2',
-    NameStudent: 'Nguyen Van a1'
+    NameStudent: 'Nguyen Van a1',
+    point: 0
   },
   {
     idStudent: '13162823',
     NameClass: '17DTH2',
-    NameStudent: 'nguyen van b3'
+    NameStudent: 'nguyen van b3',
+    point: 0
   },
   {
     idStudent: '13148128',
     NameClass: '17NNA1',
-    NameStudent: 'vu thi as'
+    NameStudent: 'vu thi as',
+    point: 0
   },
   {
     idStudent: '131728195',
     NameClass: '17DTH3',
-    NameStudent: 'Nguyen Van af'
+    NameStudent: 'Nguyen Van af',
+    point: 0
   },
   {
     idStudent: '13162823',
     NameClass: '17DTH2',
-    NameStudent: 'nguyen van b1'
+    NameStudent: 'nguyen van b1',
+    point: 0
   },
   {
     idStudent: '13148132',
     NameClass: '17DTH3',
-    NameStudent: 'vu thi a6'
+    NameStudent: 'vu thi a6',
+    point: 0
   },
 ]
 const studentWork = []
