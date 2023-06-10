@@ -14,7 +14,7 @@ function Listcomplete({ route, navigation }) {
       return e.title;
     }).indexOf(data.dataNew.title),1,data.dataNew)
   }
-  const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, status, lecturer, date, description, join, point}) => ({title, status, lecturer, date, description, join, point}));
+  const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
   return (
     <View style={{ flex: 1}}>
       
@@ -46,7 +46,7 @@ const inforWorkCom = ({route, navigation}) => {
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text> {data.point}</Text>
+      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text>{data.point}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Trạng thái:</Text> {data.status}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Giảng viên phụ trách:</Text> {data.lecturer}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Thời gian diễn ra:</Text> {data.date}</Text>
@@ -72,13 +72,14 @@ function AddWord({navigation}) {
   const [title, setTitle] = useState('')
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
-  const [point, setPoint] = useState(0)
+  const [point, setPoint] = useState(null)
   const data = {
     title: title,
     status: 'uncomplete',
     lecturer: lecturer,
     description: description,
-    point: point
+    point: Number.parseInt(point,10),
+    join: []
   }
   return(
     <ScrollView>
@@ -91,9 +92,12 @@ function AddWord({navigation}) {
         />
         <TextInput
           style={styles.input}
-          placeholder="Điểm CTXH"
           keyboardType = 'numeric'
-          onChangeText={point => setPoint(point)}
+          placeholder="Điểm CTXH"
+          onChangeText={(pointsv) => {
+            setPoint(pointsv)
+            
+          }}
           value={point}
         />
         <TextInput
@@ -116,7 +120,6 @@ function AddWord({navigation}) {
               }else{
                 navigation.navigate('Listincomplete', {dataAdd: data})
               }
-              
             }}
           >Thêm công việc</Button>
       </View>
@@ -140,10 +143,11 @@ function Listincomplete({ route, navigation }) {
     work.push(data.dataAdd)
   }else if(data.ListStudentWork != undefined){
     work[data.indexSV].join.push(...data.ListStudentWork)
+    studentWork.splice(0,studentWork.length)
   }else{
     work.splice(data.index,1)
   }
-  const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, status, lecturer, date, description, join, point}) => ({title, status, lecturer, date, description, join, point}));
+  const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
   
   return (
     <View style={{ flex: 1}}>
@@ -163,6 +167,7 @@ function Listincomplete({ route, navigation }) {
                 size="sm"
                 onPress={() => {
                   navigation.navigate('inforWork',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
+
                 }}
               >Chi Tiết</Button>
             </View>
@@ -177,16 +182,15 @@ function updateIndex({ route, navigation }){
   const value = route.params.value
   const item = route.params.item
   const index = route.params.index
+  const pointSV = item.point
   const [title, setTitle] = useState('')
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
-  const [point, setPoint] = useState(0)
-  
   if(value==0){
     const [selectedIndex, setSelectedIndex] = useState(0);
     const statusC = ['uncomplete', 'complete']
     return(
-      <View style={{flex:1}}>
+      <ScrollView style={{flex:1}}>
         <Text style={{padding: 10, fontWeight: 600}}>Tiêu Đề:</Text>
           <View style={styles.titleWork} >
             <TextInput 
@@ -197,18 +201,7 @@ function updateIndex({ route, navigation }){
               }}
               value={title}
             />
-          </View> 
-        <Text style={{padding: 10, fontWeight: 600}}>Điểm CTXH:</Text>
-          <View style={styles.titleWork} >
-            <TextInput 
-              placeholder={item.point} 
-              onChangeText={(point) => {
-                setPoint(point)
-                item.point=point
-              }}
-              value={point}
-            />
-          </View>   
+          </View>  
         <Text style={{padding: 10, fontWeight: 600}}>Trạng thái:</Text>
         <View style={styles.titleWork}>
           <ButtonGroup
@@ -254,7 +247,7 @@ function updateIndex({ route, navigation }){
             
           }}
         >Cập nhật</Button>
-      </View>
+      </ScrollView>
     )
   }
   else if(value==1){
@@ -264,7 +257,7 @@ function updateIndex({ route, navigation }){
     const [forcus, setForcus] = useState(false);
     
     function listSV() {
-      studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass}) => ({idStudent, NameStudent, NameClass}));
+      studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point}) => ({idStudent, NameStudent, NameClass, point}))
       return(
         <View style={{ flex: 1, marginTop: 50}}>
           <FlatList
@@ -276,10 +269,13 @@ function updateIndex({ route, navigation }){
                   <Button
                     size="sm"
                     onPress={()=>{
-                      if(studentWork.includes(item)){
+                      
+                      if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent)){
                         alert('Sinh viên đã được giao việc')
                       }else{
-                        studentWork.push(item)
+                        student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)].point = item.point + pointSV
+                        studentWork.push(student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)])
+                        console.log(work[index].join.map(function(e){ return e.idStudent }))
                       }
                     }}
                   >Giao việc</Button>
@@ -291,7 +287,6 @@ function updateIndex({ route, navigation }){
         </View>
       )
     }
-
     function renderLabel() {
       const dataI = []
       if(value==''){
@@ -370,10 +365,11 @@ function updateIndex({ route, navigation }){
 const inforWork = ({ route,navigation }) => {
   const data = route.params.dataItem
   const index = route.params.index
+  console.log(data)
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text> {data.point}</Text>
+      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text>{data.point}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Trạng thái:</Text> {data.status}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Giảng viên phụ trách:</Text> {data.lecturer}</Text>
       <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Thời gian diễn ra:</Text> {data.date}</Text>
@@ -400,6 +396,7 @@ const inforWork = ({ route,navigation }) => {
               navigation.navigate('Listincomplete', {index: route.params.index})
             }else{
               navigation.navigate('updateIndex',{value: value, item: data, index: route.params.index})
+              
             }
             
           }}
@@ -441,39 +438,39 @@ const Tab = createMaterialTopTabNavigator();
 const work = [
   {
     title: 'Mùa hè xanh',
+    point: 4,
     status: 'complete',
     lecturer: 'Trương Đông Nam',
     date: '14/6/2321',
     description: 'sử dụng hàm navigate như trên, gửi kém biến bình thường.',
-    join: [],
-    point: 5
+    join: []
   },
   {
     title: 'Tình nguyện viên hè 2023 ',
+    point: 2,
     status: 'complete',
     lecturer: 'Nguyễn Thị Liệu',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: [],
-    point: 2
+    join: []
   },
   {
     title: 'Cộng tác viên bơi lội',
+    point: 1,
     status: 'uncomplete',
     lecturer: 'Duy Nam',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: [],
-    point: 4
+    join: []
   },
   {
     title: 'Cộng tác viên bơi lội2',
+    point: 3,
     status: 'complete',
     lecturer: 'Nhật Minh',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: [],
-    point: 1
+    join: []
   },
 ];
 const Branch = [
@@ -619,7 +616,7 @@ const student = [
     point: 0
   },
   {
-    idStudent: '13162823',
+    idStudent: '13162873',
     NameClass: '17DTH2',
     NameStudent: 'nguyen van b1',
     point: 0
