@@ -7,8 +7,6 @@ const Stack = createNativeStackNavigator();
 
 class App extends React.Component{
 
-
-  
   render() {
     
     function Login({ navigation }) {

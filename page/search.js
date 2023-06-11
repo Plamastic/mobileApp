@@ -1,94 +1,306 @@
-import React, {useState} from 'react';
-import {
-  Button,
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, FlatList, StyleSheet,  } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
+import { Button } from '@rneui/themed';
 
-const STYLES = ['default', 'dark-content', 'light-content'];
-const TRANSITIONS = ['fade', 'slide', 'none'];
+const Branch = [
+  {
+    idBranch: 'CNTT',
+    NameBranch: 'Công nghệ thông tin',
+    value: '1',
+    Class: [
+      {
+        NameClass: '17DTH1',
+        value: '1'
+      },
+      {
+        NameClass: '17DTH2',
+        value: '2'
+      },
+      {
+        NameClass: '17DTH3',
+        value: '3'
+      }
+    ]
+  },
+  {
+    idBranch: 'NNA',
+    NameBranch: 'Ngôn ngữ anh',
+    value: '2',
+    Class: [
+      {
+        NameClass: '17NNA1',
+        value: '1'
+        
+      },
+      {
+        NameClass: '17NNA2',
+        value: '2'
+      },
+      {
+        NameClass: '17NNA3',
+        value: '3'
+      }
+    ]
+  },
+  {
+    idBranch: 'QTKD',
+    NameBranch: 'Quản trị kinh doanh',
+    value: '3',
+    Class: [
+      {
+        NameClass: '17QTKD1',
+        value: '1'
+      },
+      {
+        NameClass: '17QTKD2',
+        value: '2'
+      },
+      {
+        NameClass: '17QTKD3',
+        value: '3'
+      }
+    ]
+  },
+  {
+    idBranch: 'DD',
+    NameBranch: 'Điều dưỡng',
+    value: '4',
+    Class: [
+      {
+        NameClass: '17DD1',
+        value: '1'
+      },
+      {
+        NameClass: '17DD2',
+        value: '2'
+      },
+      {
+        NameClass: '17DD3',
+        value: '3'
+      }
+    ]
+  },
+  {
+    idBranch: 'KT',
+    NameBranch: 'Kinh tế',
+    value: '5',
+    Class: [
+      {
+        NameClass: '17KT1',
+        value: '1'
+      },
+      {
+        NameClass: '17KT2',
+        value: '2'
+      },
+      {
+        NameClass: '17KT3',
+        value: '3'
+      }
+    ]
+  },
+];
 
-const App = () => {
-  const [hidden, setHidden] = useState(false);
-  const [statusBarStyle, setStatusBarStyle] = useState(STYLES[0]);
-  const [statusBarTransition, setStatusBarTransition] = useState(
-    TRANSITIONS[0],
-  );
+const student = [
+  {
+    idStudent: '131728193',
+    NameClass: '17DTH1',
+    NameStudent: 'Nguyen Van a'
+  },
+  {
+    idStudent: '13162817',
+    NameClass: '17DTH1',
+    NameStudent: 'nguyen van b'
+  },
+  {
+    idStudent: '13148198',
+    NameClass: '17NNA1',
+    NameStudent: 'vu thi a'
+  },
+  {
+    idStudent: '131728145',
+    NameClass: '17DTH2',
+    NameStudent: 'Nguyen Van a1'
+  },
+  {
+    idStudent: '13162823',
+    NameClass: '17DTH2',
+    NameStudent: 'nguyen van b3'
+  },
+  {
+    idStudent: '13148128',
+    NameClass: '17NNA1',
+    NameStudent: 'vu thi as'
+  },
+  {
+    idStudent: '131728195',
+    NameClass: '17DTH3',
+    NameStudent: 'Nguyen Van af'
+  },
+  {
+    idStudent: '13162823',
+    NameClass: '17DTH2',
+    NameStudent: 'nguyen van b1'
+  },
+  {
+    idStudent: '13148132',
+    NameClass: '17DTH3',
+    NameStudent: 'vu thi a6'
+  },
+]
 
-  const changeStatusBarVisibility = () => setHidden(!hidden);
-
-  const changeStatusBarStyle = () => {
-    const styleId = STYLES.indexOf(statusBarStyle) + 1;
-    if (styleId === STYLES.length) {
-      setStatusBarStyle(STYLES[0]);
-    } else {
-      setStatusBarStyle(STYLES[styleId]);
-    }
-  };
-
-  const changeStatusBarTransition = () => {
-    const transition = TRANSITIONS.indexOf(statusBarTransition) + 1;
-    if (transition === TRANSITIONS.length) {
-      setStatusBarTransition(TRANSITIONS[0]);
-    } else {
-      setStatusBarTransition(TRANSITIONS[transition]);
-    }
-  };
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor="#61dafb"
-        barStyle={statusBarStyle}
-        showHideTransition={statusBarTransition}
-        hidden={hidden}
-      />
-      <Text style={styles.textStyle}>
-        StatusBar Visibility:{'\n'}
-        {hidden ? 'Hidden' : 'Visible'}
-      </Text>
-      <Text style={styles.textStyle}>
-        StatusBar Style:{'\n'}
-        {statusBarStyle}
-      </Text>
-      {Platform.OS === 'ios' ? (
-        <Text style={styles.textStyle}>
-          StatusBar Transition:{'\n'}
-          {statusBarTransition}
-        </Text>
-      ) : null}
-      <View style={styles.buttonsContainer}>
-        <Button title="Toggle StatusBar" onPress={changeStatusBarVisibility} />
-        <Button title="Change StatusBar Style" onPress={changeStatusBarStyle} />
-        {Platform.OS === 'ios' ? (
-          <Button
-            title="Change StatusBar Transition"
-            onPress={changeStatusBarTransition}
-          />
-        ) : null}
+function List() {
+  const [value, setValue] = useState('');
+  const [isFocus, setIsFocus] = useState(false);
+  const [item, setItem] = useState([]);
+  const [forcus, setForcus] = useState(false);
+  function listSV() {
+    studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass}) => ({idStudent, NameStudent, NameClass}));
+    return(
+      <View style={{ flex: 1, marginTop: 50}}>
+        <FlatList
+          data={studentN}
+          renderItem={({item}) => (
+            <View style={styles.item}>
+              <Text style={styles.title}>{item.NameStudent}</Text>
+              <View style={styles.btninfor}>
+                <Button
+                  size="sm"
+                >Giao việc</Button>
+              </View>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+        
       </View>
-    </SafeAreaView>
-  );
+    )
+  }
+
+  function renderLabel() {
+    const dataI = []
+    if(value==''){
+      console.log('if')
+    }else{
+      value.Class.forEach(function(data) {
+        dataI.push(data)
+      })
+    }
+    
+    return(
+        <View style={{ flex: 1, marginTop: 20}}>
+          <Dropdown
+            style={[styles.dropdown, forcus && { borderColor: 'blue' }]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={dataI}
+            search
+            maxHeight={300}
+            labelField="NameClass"
+            valueField="value"
+            placeholder={!forcus ? 'Chọn Lớp' : ''}
+            searchPlaceholder="Nhập tên Lớp"
+            value={item}
+            onFocus={() => setForcus(true)}
+            onBlur={() => setForcus(true)}
+            onChange={item => {
+              setItem(item);
+              setForcus(true);
+            }}  
+          />
+          {listSV()}
+        </View>
+    )
+  };
+  
+  return(
+    <View style={styles.container}>
+      <Dropdown
+        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={Branch}
+        search
+        maxHeight={300}
+        labelField="NameBranch"
+        valueField="value"
+        placeholder={!isFocus ? 'Chọn khoa' : ''}
+        searchPlacvalueeholder="Nhập tên khoa"
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(true)}
+        onChange={item => {
+          setValue(item);
+          setIsFocus(true);
+        }}
+      />
+      {renderLabel()}
+    </View>
+  )
 };
+
+export default List
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
+    padding: 16,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  btninfor: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ECF0F1',
+    padding: 5,
   },
-  buttonsContainer: {
-    padding: 10,
+  btninfor: {
+    flex: 1,
+    flexDirection:'row',
+    justifyContent: 'flex-end'
   },
-  textStyle: {
-    textAlign: 'center',
-    marginBottom: 8,
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
   },
+  item: {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 8,
+    marginHorizontal: 16,
+  }
 });
-
-export default App;

@@ -10,38 +10,6 @@ const Stack = createNativeStackNavigator();
 
 class App extends React.Component{
 
-
-  componentDidMount(){
-    axios.get('192.168.1.93:3000/database').then((res) => {
-      const datag = res.data
-      this.setState({datag})
-    })
-  }
-
-  // dinhnghiaPost(){
-  //   var url = '192.168.1.93:3000/data'
-  //   axios.post(url,{
-  //     Username: this.state.input1,
-  //     PassWord: this.state.input2
-  //   }).then((res)=>{
-  //     console.log(res)
-  //   }).catch((err)=>{
-  //     console.log(err)
-  //   })
-  //   this.state.input1=''
-  //   this.state.input2=''
-  // }
-  // dinhnghiGet(){
-  //   var url = '192.168.1.93:3000/data'
-  //   axios.get(url).then((gdata)=>{
-  //     console.log(gdata)
-  //     this.setState({
-  //       dataUser: gdata.data,
-  //     })
-  //   })
-  // }
-
-  
   render() {
     function forgotPassword({navigation}) {
       const [userName, setUserName]=useState('')

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Point from './point';
 import Calender from './calender';
-import SearchBar from './search';
+import Search from './list'; 
  
 
   const Tab = createBottomTabNavigator();
@@ -36,7 +36,7 @@ import SearchBar from './search';
     return (
         <Tab.Navigator>
           <Tab.Screen name="Cá nhân" component={User} />
-          <Tab.Screen name="Sinh Viên" component={SearchBar} />
+          <Tab.Screen name="Sinh Viên" component={Search} />
           <Tab.Screen name="Công việc" component={Point} />
           <Tab.Screen name="Lịch trình" component={Calender} />
         </Tab.Navigator>

@@ -42,7 +42,6 @@ function Listcomplete({ route, navigation }) {
 const inforWorkCom = ({route, navigation}) => {
   const data = route.params.dataItem
   const index = route.params.index
-  console.log(index)
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
@@ -96,7 +95,6 @@ function AddWord({navigation}) {
           placeholder="Điểm CTXH"
           onChangeText={(pointsv) => {
             setPoint(pointsv)
-            
           }}
           value={point}
         />
@@ -323,7 +321,6 @@ function updateIndex({ route, navigation }){
           </View>
       )
     };
-    
     return(
       <ScrollView style={{flex: 1, flexDirection: 'column'}}>
         <View style={styles.containersv}>
@@ -365,7 +362,6 @@ function updateIndex({ route, navigation }){
 const inforWork = ({ route,navigation }) => {
   const data = route.params.dataItem
   const index = route.params.index
-  console.log(data)
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
@@ -384,21 +380,18 @@ const inforWork = ({ route,navigation }) => {
               </View>
             )}
             keyExtractor={item => item.id}
-          /> 
-        </View> 
+          />
+        </View>
       <View style={{marginTop: 50}}>
         <ButtonGroup
-          
           selectedIndex={''}
           buttons={['Cập nhật', 'Giao việc', 'Xóa']}
-          onPress={(value) => { 
+          onPress={(value) => {
             if(value==2){
               navigation.navigate('Listincomplete', {index: route.params.index})
             }else{
               navigation.navigate('updateIndex',{value: value, item: data, index: route.params.index})
-              
             }
-            
           }}
           containerStyle={{ marginBottom: 20 }}
         />
@@ -472,7 +465,7 @@ const work = [
     description: 'fdsakhfd',
     join: []
   },
-];
+]
 const Branch = [
   {
     idBranch: 'CNTT',
@@ -570,7 +563,7 @@ const Branch = [
       }
     ]
   },
-];
+]
 
 const student = [
   {
@@ -629,9 +622,7 @@ const student = [
   },
 ]
 const studentWork = []
-export default class App extends React.Component {
-
-  
+export default class Point extends React.Component {
   render() {
     return (
       <Tab.Navigator>
