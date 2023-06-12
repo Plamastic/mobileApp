@@ -4,6 +4,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Button, ButtonGroup, CheckBox } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
+import Search from './list'; 
+
 
 function Listcomplete({ route, navigation }) {
   const data = route.params
@@ -17,7 +19,6 @@ function Listcomplete({ route, navigation }) {
   const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
   return (
     <View style={{ flex: 1}}>
-      
       <FlatList
         data={List}
         renderItem={({item}) => (
@@ -27,7 +28,7 @@ function Listcomplete({ route, navigation }) {
               <Button
                 size="sm"
                 onPress={() => {
-                  navigation.navigate('inforWorkCom',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
+                  navigation.navigate('InforWorkCom',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
                 }}
               >Chi Tiết</Button>
             </View>
@@ -39,7 +40,7 @@ function Listcomplete({ route, navigation }) {
   );
 }
 
-const inforWorkCom = ({route, navigation}) => {
+const InforWorkCom = ({route, navigation}) => {
   const data = route.params.dataItem
   const index = route.params.index
   return(
@@ -164,8 +165,8 @@ function Listincomplete({ route, navigation }) {
               <Button
                 size="sm"
                 onPress={() => {
-                  navigation.navigate('inforWork',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
-
+                  navigation.navigate('InforWork',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
+                  
                 }}
               >Chi Tiết</Button>
             </View>
@@ -176,7 +177,7 @@ function Listincomplete({ route, navigation }) {
     </View>
   );
 }
-function updateIndex({ route, navigation }){
+function UpdateIndex({ route, navigation }){
   const value = route.params.value
   const item = route.params.item
   const index = route.params.index
@@ -240,7 +241,8 @@ function updateIndex({ route, navigation }){
             if(item.status=='uncomplete'){
               navigation.navigate('Listincomplete',{dataItem: item, index: index})
             }else{
-              navigation.navigate('Listincomplete',{dataItem: item})
+              // navigation.navigate('Listincomplete',{dataItem: item})
+              Search(item)
             }
             
           }}
@@ -268,7 +270,7 @@ function updateIndex({ route, navigation }){
                     size="sm"
                     onPress={()=>{
                       
-                      if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent)){
+                      if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent) || studentWork.map(function(e){ return e.idStudent }).includes(item.idStudent)){
                         alert('Sinh viên đã được giao việc')
                       }else{
                         student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)].point = item.point + pointSV
@@ -359,7 +361,7 @@ function updateIndex({ route, navigation }){
 }
 
 
-const inforWork = ({ route,navigation }) => {
+const InforWork = ({ route,navigation }) => {
   const data = route.params.dataItem
   const index = route.params.index
   return(
@@ -390,7 +392,7 @@ const inforWork = ({ route,navigation }) => {
             if(value==2){
               navigation.navigate('Listincomplete', {index: route.params.index})
             }else{
-              navigation.navigate('updateIndex',{value: value, item: data, index: route.params.index})
+              navigation.navigate('UpdateIndex',{value: value, item: data, index: route.params.index})
             }
           }}
           containerStyle={{ marginBottom: 20 }}
@@ -400,26 +402,26 @@ const inforWork = ({ route,navigation }) => {
     </ScrollView>
   )
 }
-function incomplete() {
+function Incomplete() {
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name="Listincomplete" component={Listincomplete} />
-        <Stack.Screen options={{headerShown: false}} name="inforWork" component={inforWork} />
-        <Stack.Screen options={{headerShown: false}} name="updateIndex" component={updateIndex} />
+        <Stack.Screen options={{headerShown: false}} name="InforWork" component={InforWork} />
+        <Stack.Screen options={{headerShown: false}} name="UpdateIndex" component={UpdateIndex} />
         <Stack.Screen options={{headerShown: false}} name="AddWord" component={AddWord} />
       </Stack.Navigator>
     </SafeAreaView>
   )
 }
 
-function complete() {
+function Complete() {
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name="Listcomplete" component={Listcomplete} />
-        <Stack.Screen options={{headerShown: false}} name="inforWorkCom" component={inforWorkCom} />
-        <Stack.Screen options={{headerShown: false}} name="updateIndex" component={updateIndex} />
+        <Stack.Screen options={{headerShown: false}} name="InforWorkCom" component={InforWorkCom} />
+        <Stack.Screen options={{headerShown: false}} name="UpdateIndex" component={UpdateIndex} />
       </Stack.Navigator>
     </SafeAreaView>
   )
@@ -564,61 +566,87 @@ const Branch = [
     ]
   },
 ]
-
 const student = [
   {
     idStudent: '131728193',
     NameClass: '17DTH1',
     NameStudent: 'Nguyen Van a',
-    point: 0
+    point: 0,
+    Phone: '0938773',
+    Sex: 'nam',
+    Address: 'adgdfbfhgf'
   },
   {
     idStudent: '13162817',
     NameClass: '17DTH1',
     NameStudent: 'nguyen van b',
-    point: 0
+    point: 0,
+    Phone: '34324324',
+    Sex: 'nam',
+    Address: 'sadfsdaf'
   },
   {
     idStudent: '13148198',
     NameClass: '17NNA1',
     NameStudent: 'vu thi a',
-    point: 0
+    point: 0,
+    Phone: '3123453',
+    Sex: 'Nữ',
+    Address: 'ádfsdfs'
   },
   {
     idStudent: '131728145',
     NameClass: '17DTH2',
     NameStudent: 'Nguyen Van a1',
-    point: 0
+    point: 0,
+    Phone: '234454',
+    Sex: 'Nam',
+    Address: 'fdasfsda'
   },
   {
     idStudent: '13162823',
     NameClass: '17DTH2',
     NameStudent: 'nguyen van b3',
-    point: 0
+    point: 0,
+    Phone: '',
+    Sex: '',
+    Address: ''
   },
   {
     idStudent: '13148128',
     NameClass: '17NNA1',
     NameStudent: 'vu thi as',
-    point: 0
+    point: 0,
+    Phone: '',
+    Sex: '',
+    Address: ''
   },
   {
     idStudent: '131728195',
     NameClass: '17DTH3',
     NameStudent: 'Nguyen Van af',
-    point: 0
+    point: 0,
+    Phone: '',
+    Sex: '',
+    Address: ''
   },
   {
     idStudent: '13162873',
     NameClass: '17DTH2',
     NameStudent: 'nguyen van b1',
-    point: 0
+    point: 0,
+    Phone: '',
+    Sex: '',
+    Address: ''
   },
   {
     idStudent: '13148132',
     NameClass: '17DTH3',
     NameStudent: 'vu thi a6',
-    point: 0
+    point: 0,
+    Phone: '',
+    Sex: '',
+    Address: ''
   },
 ]
 const studentWork = []
@@ -626,8 +654,8 @@ export default class Point extends React.Component {
   render() {
     return (
       <Tab.Navigator>
-          <Tab.Screen name="Chưa hoàn thành" component={incomplete} />
-          <Tab.Screen name="Đã hoàn thành" component={complete} />
+          <Tab.Screen name="Chưa hoàn thành" component={Incomplete} />
+          <Tab.Screen name="Đã hoàn thành" component={Complete} />
       </Tab.Navigator>
     )
   }

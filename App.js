@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 class App extends React.Component{
 
   render() {
-    function forgotPassword({navigation}) {
+    function ForgotPassword({navigation}) {
       const [userName, setUserName]=useState('')
       const [email, setEmail]=useState('')
       const forgot = () => {
@@ -102,7 +102,7 @@ class App extends React.Component{
                 <Button
                     title="Quên mật khẩu"
                     onPress={() => { 
-                      navigation.navigate('forgotPassword')
+                      navigation.navigate('ForgotPassword')
                     }}
                 />
               </View>
@@ -114,7 +114,7 @@ class App extends React.Component{
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
           <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
-          <Stack.Screen options={{headerShown: false}} name="forgotPassword" component={forgotPassword} />
+          <Stack.Screen options={{headerShown: false}} name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     )

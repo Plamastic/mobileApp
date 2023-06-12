@@ -3,7 +3,8 @@ import { StyleSheet, View, SafeAreaView, FlatList, Text, ScrollView, TextInput  
 import { Button } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
- 
+import Point from './point'; 
+
 const Stack = createNativeStackNavigator();
 
 class Search extends Component {
@@ -13,60 +14,97 @@ class Search extends Component {
       data: [],
       value: '',
     }
+    this.inputSearch = {}
     this.student = [
       {
         idStudent: '131728193',
         NameClass: '17DTH1',
         NameStudent: 'Nguyen Van a',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '13162817',
         NameClass: '17DTH1',
         NameStudent: 'nguyen van b',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '13148198',
         NameClass: '17NNA1',
         NameStudent: 'vu thi a',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '131728145',
         NameClass: '17DTH2',
         NameStudent: 'Nguyen Van a1',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '13162823',
         NameClass: '17DTH2',
         NameStudent: 'nguyen van b3',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '13148128',
         NameClass: '17NNA1',
         NameStudent: 'vu thi as',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '131728195',
         NameClass: '17DTH3',
         NameStudent: 'Nguyen Van af',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '13162873',
         NameClass: '17DTH2',
         NameStudent: 'nguyen van b1',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
       {
         idStudent: '13148132',
         NameClass: '17DTH3',
         NameStudent: 'vu thi a6',
-        point: 0
+        point: 0,
+        Phone: '',
+        Sex: '',
+        DateOfBirth: '',
+        Address: ''
       },
     ]
 
@@ -233,9 +271,8 @@ class Search extends Component {
         value: text,
       });
     };
-    const inforStudent = ({ route, navigation }) => {
+    const InforStudent = ({ route, navigation }) => {
       const data = route.params.item
-      console.log(data)
       return(
         <ScrollView style={{ flex: 1, margin: 10}}>
           <Text style={styles.titleWork}>{data.NameStudent}</Text>
@@ -293,6 +330,7 @@ class Search extends Component {
                     navigation.navigate('AddStudent')
                   }}
             >Thêm sinh viên</Button>
+            {console.log()}
           </View>
         );
       };
@@ -319,7 +357,7 @@ class Search extends Component {
                       borderRadius: 10,
                     }}
                     onPress={() => {
-                      navigation.navigate('inforStudent', {item: item})
+                      navigation.navigate('InforStudent', {item: item})
                     }}
                   >Chi Tiết</Button>
                 </View>
@@ -489,7 +527,7 @@ class Search extends Component {
       <SafeAreaView style={styles.container}>
         <Stack.Navigator>
           <Stack.Screen options={{headerShown: false}} name="List" component={List} />
-          <Stack.Screen options={{headerShown: false}} name="inforStudent" component={inforStudent} />
+          <Stack.Screen options={{headerShown: false}} name="InforStudent" component={InforStudent} />
           <Stack.Screen options={{headerShown: false}} name="AddStudent" component={AddStudent} />
         </Stack.Navigator>
       </SafeAreaView>
