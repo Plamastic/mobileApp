@@ -5,7 +5,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './page/user';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LogBox } from "react-native"
 
+LogBox.ignoreAllLogs(true)
 const Stack = createNativeStackNavigator();
 
 class App extends React.Component{
@@ -19,7 +21,6 @@ class App extends React.Component{
           alert('Bạn chưa nhập tài khoản hoặc email')
         }else{
             navigation.navigate('Login')
-            console.log(userName)
             setUserName('')
             setEmail('')
         }
@@ -66,13 +67,11 @@ class App extends React.Component{
         }else{
           if(userName == dataUser.User && passWord == dataUser.Pass){
             navigation.navigate('Home')
-            console.log(userName)
           }else{
             alert('Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại')
           }
         }
       }
-      
       return(
         <ScrollView>
               <Text style={styles.text}>Đăng Nhập</Text>

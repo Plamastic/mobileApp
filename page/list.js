@@ -3,10 +3,15 @@ import { StyleSheet, View, SafeAreaView, FlatList, Text, ScrollView, TextInput  
 import { Button } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
-import Point from './point'; 
+import { student } from './point';
+import { LogBox } from "react-native"
 
+LogBox.ignoreAllLogs(true)
+
+export function dataV(item){
+  console.log(item,'fds')
+}
 const Stack = createNativeStackNavigator();
-
 class Search extends Component {
   constructor(props) {
     super(props)
@@ -15,99 +20,7 @@ class Search extends Component {
       value: '',
     }
     this.inputSearch = {}
-    this.student = [
-      {
-        idStudent: '131728193',
-        NameClass: '17DTH1',
-        NameStudent: 'Nguyen Van a',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '13162817',
-        NameClass: '17DTH1',
-        NameStudent: 'nguyen van b',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '13148198',
-        NameClass: '17NNA1',
-        NameStudent: 'vu thi a',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '131728145',
-        NameClass: '17DTH2',
-        NameStudent: 'Nguyen Van a1',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '13162823',
-        NameClass: '17DTH2',
-        NameStudent: 'nguyen van b3',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '13148128',
-        NameClass: '17NNA1',
-        NameStudent: 'vu thi as',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '131728195',
-        NameClass: '17DTH3',
-        NameStudent: 'Nguyen Van af',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '13162873',
-        NameClass: '17DTH2',
-        NameStudent: 'nguyen van b1',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-      {
-        idStudent: '13148132',
-        NameClass: '17DTH3',
-        NameStudent: 'vu thi a6',
-        point: 0,
-        Phone: '',
-        Sex: '',
-        DateOfBirth: '',
-        Address: ''
-      },
-    ]
-
+    this.student = student.map(({idStudent, NameClass, NameStudent, point, Phone, Sex, Address}) => ({idStudent, NameClass, NameStudent, point, Phone, Sex, Address}))
     this.work = [
       {
         title: 'Mùa hè xanh',
@@ -298,7 +211,6 @@ class Search extends Component {
     const List = ({ route, navigation }) => {
       const item = route.params
       if(item == undefined){
-        console.log('undefindd')
       }else{
         this.student.push(item.item)
       }
@@ -330,7 +242,7 @@ class Search extends Component {
                     navigation.navigate('AddStudent')
                   }}
             >Thêm sinh viên</Button>
-            {console.log()}
+            
           </View>
         );
       };
@@ -357,7 +269,8 @@ class Search extends Component {
                       borderRadius: 10,
                     }}
                     onPress={() => {
-                      navigation.navigate('InforStudent', {item: item})
+                      // navigation.navigate('InforStudent', {item: item})
+                      console.log(item)
                     }}
                   >Chi Tiết</Button>
                 </View>
@@ -388,7 +301,6 @@ class Search extends Component {
       function renderLabel() {
         const dataI = []
         if(value==''){
-          console.log('')
         }else{
           value.Class.forEach(function(data) {
             dataI.push(data)
@@ -534,7 +446,6 @@ class Search extends Component {
     )
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -638,4 +549,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Search
+function ListSVScreen() {
+  return (
+    <Search />
+  )
+}
+
+export default ListSVScreen

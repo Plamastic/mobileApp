@@ -4,7 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Point from './point';
 import Calender from './calender';
 import Search from './list'; 
- 
+import { LogBox } from "react-native"
+
+LogBox.ignoreAllLogs(true)
 
   const Tab = createBottomTabNavigator();
 

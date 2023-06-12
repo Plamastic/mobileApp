@@ -1,11 +1,8 @@
-import React from "react";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import Point from './point';
-import Calender from './calender';
-import Search from './list'; 
-
-const datasv = [
-    {
-        name: 'fds',
-        value: 1
-    }
-]
+import { student } from './point';
+    
+  export default function Action() {
+    console.log(student, 'asfsd')
+  }

@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, SafeAreaView, FlatList, Text, ScrollView, TextInput  } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Button, ButtonGroup, CheckBox } from '@rneui/themed';
+import { Button, ButtonGroup } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
-import Search from './list'; 
+import Calender from './calender';
+import { dataV } from './list';
+import { LogBox } from "react-native"
 
-
+LogBox.ignoreAllLogs(true)
 function Listcomplete({ route, navigation }) {
   const data = route.params
   if(data == undefined){
-    console.log('undefined')
   }else{
+    
     work.splice(work.map(function(e){
       return e.title;
     }).indexOf(data.dataNew.title),1,data.dataNew)
+    
+    console.log(student)
   }
   const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
   return (
@@ -29,6 +33,7 @@ function Listcomplete({ route, navigation }) {
                 size="sm"
                 onPress={() => {
                   navigation.navigate('InforWorkCom',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
+                  
                 }}
               >Chi Tiết</Button>
             </View>
@@ -68,7 +73,7 @@ const InforWorkCom = ({route, navigation}) => {
   )
 }
 
-function AddWord({navigation}) {
+function AddWork({navigation}) {
   const [title, setTitle] = useState('')
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
@@ -128,15 +133,14 @@ function AddWord({navigation}) {
 
 function Listincomplete({ route, navigation }) {
   const data = route.params
-  console.log(data)
   if(data == undefined){
-    console.log('undefindd')
   }else if(data.dataItem != undefined ){
     if(data.dataItem.status=='uncomplete'){
       work.splice(data.index,1,data.dataItem)
     }else{
       work.splice(work.map(function(e){ return e.title}).indexOf(data.dataItem.title),1,data.dataItem)
       navigation.navigate('Listcomplete',{dataNew: data.dataItem})
+      navigation.navigate('Listincomplete')
     }
   }else if(data.dataAdd != undefined){
     work.push(data.dataAdd)
@@ -153,7 +157,7 @@ function Listincomplete({ route, navigation }) {
       <Button 
         size="md"
         onPress={() => {
-          navigation.navigate('AddWord')
+          navigation.navigate('AddWork')
         }}
       >Thêm công việc</Button>
       <FlatList
@@ -234,17 +238,16 @@ function UpdateIndex({ route, navigation }){
               }}
               value={description}
             />
-        </View>  
+        </View>
         <Button
           size="md"
           onPress={() => {
             if(item.status=='uncomplete'){
               navigation.navigate('Listincomplete',{dataItem: item, index: index})
             }else{
-              // navigation.navigate('Listincomplete',{dataItem: item})
-              Search(item)
+              navigation.navigate('Listincomplete',{dataItem: item})
+              
             }
-            
           }}
         >Cập nhật</Button>
       </ScrollView>
@@ -257,7 +260,7 @@ function UpdateIndex({ route, navigation }){
     const [forcus, setForcus] = useState(false);
     
     function listSV() {
-      studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point}) => ({idStudent, NameStudent, NameClass, point}))
+      const studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point}) => ({idStudent, NameStudent, NameClass, point}))
       return(
         <View style={{ flex: 1, marginTop: 50}}>
           <FlatList
@@ -269,13 +272,11 @@ function UpdateIndex({ route, navigation }){
                   <Button
                     size="sm"
                     onPress={()=>{
-                      
                       if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent) || studentWork.map(function(e){ return e.idStudent }).includes(item.idStudent)){
                         alert('Sinh viên đã được giao việc')
                       }else{
                         student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)].point = item.point + pointSV
                         studentWork.push(student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)])
-                        console.log(work[index].join.map(function(e){ return e.idStudent }))
                       }
                     }}
                   >Giao việc</Button>
@@ -290,7 +291,6 @@ function UpdateIndex({ route, navigation }){
     function renderLabel() {
       const dataI = []
       if(value==''){
-        console.log('')
       }else{
         value.Class.forEach(function(data) {
           dataI.push(data)
@@ -360,7 +360,6 @@ function UpdateIndex({ route, navigation }){
   }
 }
 
-
 const InforWork = ({ route,navigation }) => {
   const data = route.params.dataItem
   const index = route.params.index
@@ -409,7 +408,7 @@ function Incomplete() {
         <Stack.Screen options={{headerShown: false}} name="Listincomplete" component={Listincomplete} />
         <Stack.Screen options={{headerShown: false}} name="InforWork" component={InforWork} />
         <Stack.Screen options={{headerShown: false}} name="UpdateIndex" component={UpdateIndex} />
-        <Stack.Screen options={{headerShown: false}} name="AddWord" component={AddWord} />
+        <Stack.Screen options={{headerShown: false}} name="AddWork" component={AddWork} />
       </Stack.Navigator>
     </SafeAreaView>
   )
@@ -426,11 +425,11 @@ function Complete() {
     </SafeAreaView>
   )
 }
- 
+
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-const work = [
+export const work = [
   {
     title: 'Mùa hè xanh',
     point: 4,
@@ -468,7 +467,7 @@ const work = [
     join: []
   },
 ]
-const Branch = [
+export const Branch = [
   {
     idBranch: 'CNTT',
     NameBranch: 'Công nghệ thông tin',
@@ -566,7 +565,7 @@ const Branch = [
     ]
   },
 ]
-const student = [
+export const student = [
   {
     idStudent: '131728193',
     NameClass: '17DTH1',
