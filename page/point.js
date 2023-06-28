@@ -4,11 +4,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Button, ButtonGroup } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
-import Calender from './calender';
-import { dataV } from './list';
 import { LogBox } from "react-native"
+import { student, work, Branch } from './search';
 
 LogBox.ignoreAllLogs(true)
+
 function Listcomplete({ route, navigation }) {
   const data = route.params
   if(data == undefined){
@@ -33,7 +33,6 @@ function Listcomplete({ route, navigation }) {
                 size="sm"
                 onPress={() => {
                   navigation.navigate('InforWorkCom',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
-                  
                 }}
               >Chi Tiết</Button>
             </View>
@@ -141,6 +140,8 @@ function Listincomplete({ route, navigation }) {
       work.splice(work.map(function(e){ return e.title}).indexOf(data.dataItem.title),1,data.dataItem)
       navigation.navigate('Listcomplete',{dataNew: data.dataItem})
       navigation.navigate('Listincomplete')
+      
+      console.log( data.dataItem.join.map(function(e){ return e.idStudent }))
     }
   }else if(data.dataAdd != undefined){
     work.push(data.dataAdd)
@@ -428,226 +429,6 @@ function Complete() {
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
-
-export const work = [
-  {
-    title: 'Mùa hè xanh',
-    point: 4,
-    status: 'complete',
-    lecturer: 'Trương Đông Nam',
-    date: '14/6/2321',
-    description: 'sử dụng hàm navigate như trên, gửi kém biến bình thường.',
-    join: []
-  },
-  {
-    title: 'Tình nguyện viên hè 2023 ',
-    point: 2,
-    status: 'complete',
-    lecturer: 'Nguyễn Thị Liệu',
-    date: '14/6/2321',
-    description: 'fdsakhfd',
-    join: []
-  },
-  {
-    title: 'Cộng tác viên bơi lội',
-    point: 1,
-    status: 'uncomplete',
-    lecturer: 'Duy Nam',
-    date: '14/6/2321',
-    description: 'fdsakhfd',
-    join: []
-  },
-  {
-    title: 'Cộng tác viên bơi lội2',
-    point: 3,
-    status: 'complete',
-    lecturer: 'Nhật Minh',
-    date: '14/6/2321',
-    description: 'fdsakhfd',
-    join: []
-  },
-]
-export const Branch = [
-  {
-    idBranch: 'CNTT',
-    NameBranch: 'Công nghệ thông tin',
-    value: '1',
-    Class: [
-      {
-        NameClass: '17DTH1',
-        value: '1'
-      },
-      {
-        NameClass: '17DTH2',
-        value: '2'
-      },
-      {
-        NameClass: '17DTH3',
-        value: '3'
-      }
-    ]
-  },
-  {
-    idBranch: 'NNA',
-    NameBranch: 'Ngôn ngữ anh',
-    value: '2',
-    Class: [
-      {
-        NameClass: '17NNA1',
-        value: '1'
-        
-      },
-      {
-        NameClass: '17NNA2',
-        value: '2'
-      },
-      {
-        NameClass: '17NNA3',
-        value: '3'
-      }
-    ]
-  },
-  {
-    idBranch: 'QTKD',
-    NameBranch: 'Quản trị kinh doanh',
-    value: '3',
-    Class: [
-      {
-        NameClass: '17QTKD1',
-        value: '1'
-      },
-      {
-        NameClass: '17QTKD2',
-        value: '2'
-      },
-      {
-        NameClass: '17QTKD3',
-        value: '3'
-      }
-    ]
-  },
-  {
-    idBranch: 'DD',
-    NameBranch: 'Điều dưỡng',
-    value: '4',
-    Class: [
-      {
-        NameClass: '17DD1',
-        value: '1'
-      },
-      {
-        NameClass: '17DD2',
-        value: '2'
-      },
-      {
-        NameClass: '17DD3',
-        value: '3'
-      }
-    ]
-  },
-  {
-    idBranch: 'KT',
-    NameBranch: 'Kinh tế',
-    value: '5',
-    Class: [
-      {
-        NameClass: '17KT1',
-        value: '1'
-      },
-      {
-        NameClass: '17KT2',
-        value: '2'
-      },
-      {
-        NameClass: '17KT3',
-        value: '3'
-      }
-    ]
-  },
-]
-export const student = [
-  {
-    idStudent: '131728193',
-    NameClass: '17DTH1',
-    NameStudent: 'Nguyen Van a',
-    point: 0,
-    Phone: '0938773',
-    Sex: 'nam',
-    Address: 'adgdfbfhgf'
-  },
-  {
-    idStudent: '13162817',
-    NameClass: '17DTH1',
-    NameStudent: 'nguyen van b',
-    point: 0,
-    Phone: '34324324',
-    Sex: 'nam',
-    Address: 'sadfsdaf'
-  },
-  {
-    idStudent: '13148198',
-    NameClass: '17NNA1',
-    NameStudent: 'vu thi a',
-    point: 0,
-    Phone: '3123453',
-    Sex: 'Nữ',
-    Address: 'ádfsdfs'
-  },
-  {
-    idStudent: '131728145',
-    NameClass: '17DTH2',
-    NameStudent: 'Nguyen Van a1',
-    point: 0,
-    Phone: '234454',
-    Sex: 'Nam',
-    Address: 'fdasfsda'
-  },
-  {
-    idStudent: '13162823',
-    NameClass: '17DTH2',
-    NameStudent: 'nguyen van b3',
-    point: 0,
-    Phone: '',
-    Sex: '',
-    Address: ''
-  },
-  {
-    idStudent: '13148128',
-    NameClass: '17NNA1',
-    NameStudent: 'vu thi as',
-    point: 0,
-    Phone: '',
-    Sex: '',
-    Address: ''
-  },
-  {
-    idStudent: '131728195',
-    NameClass: '17DTH3',
-    NameStudent: 'Nguyen Van af',
-    point: 0,
-    Phone: '',
-    Sex: '',
-    Address: ''
-  },
-  {
-    idStudent: '13162873',
-    NameClass: '17DTH2',
-    NameStudent: 'nguyen van b1',
-    point: 0,
-    Phone: '',
-    Sex: '',
-    Address: ''
-  },
-  {
-    idStudent: '13148132',
-    NameClass: '17DTH3',
-    NameStudent: 'vu thi a6',
-    point: 0,
-    Phone: '',
-    Sex: '',
-    Address: ''
-  },
-]
 const studentWork = []
 export default class Point extends React.Component {
   render() {

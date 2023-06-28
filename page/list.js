@@ -3,14 +3,11 @@ import { StyleSheet, View, SafeAreaView, FlatList, Text, ScrollView, TextInput  
 import { Button } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
-import { student } from './point';
 import { LogBox } from "react-native"
+import { student, work, Branch } from './search';
+
 
 LogBox.ignoreAllLogs(true)
-
-export function dataV(item){
-  console.log(item,'fds')
-}
 const Stack = createNativeStackNavigator();
 class Search extends Component {
   constructor(props) {
@@ -20,143 +17,6 @@ class Search extends Component {
       value: '',
     }
     this.inputSearch = {}
-    this.student = student.map(({idStudent, NameClass, NameStudent, point, Phone, Sex, Address}) => ({idStudent, NameClass, NameStudent, point, Phone, Sex, Address}))
-    this.work = [
-      {
-        title: 'Mùa hè xanh',
-        point: 4,
-        status: 'complete',
-        lecturer: 'Trương Đông Nam',
-        date: '14/6/2321',
-        description: 'sử dụng hàm navigate như trên, gửi kém biến bình thường.',
-        join: []
-      },
-      {
-        title: 'Tình nguyện viên hè 2023 ',
-        point: 2,
-        status: 'complete',
-        lecturer: 'Nguyễn Thị Liệu',
-        date: '14/6/2321',
-        description: 'fdsakhfd',
-        join: []
-      },
-      {
-        title: 'Cộng tác viên bơi lội',
-        point: 1,
-        status: 'uncomplete',
-        lecturer: 'Duy Nam',
-        date: '14/6/2321',
-        description: 'fdsakhfd',
-        join: []
-      },
-      {
-        title: 'Cộng tác viên bơi lội2',
-        point: 3,
-        status: 'complete',
-        lecturer: 'Nhật Minh',
-        date: '14/6/2321',
-        description: 'fdsakhfd',
-        join: []
-      },
-    ]
-    this.branch = [
-      {
-        idBranch: 'CNTT',
-        NameBranch: 'Công nghệ thông tin',
-        value: '1',
-        Class: [
-          {
-            NameClass: '17DTH1',
-            value: '1'
-          },
-          {
-            NameClass: '17DTH2',
-            value: '2'
-          },
-          {
-            NameClass: '17DTH3',
-            value: '3'
-          }
-        ]
-      },
-      {
-        idBranch: 'NNA',
-        NameBranch: 'Ngôn ngữ anh',
-        value: '2',
-        Class: [
-          {
-            NameClass: '17NNA1',
-            value: '1'
-            
-          },
-          {
-            NameClass: '17NNA2',
-            value: '2'
-          },
-          {
-            NameClass: '17NNA3',
-            value: '3'
-          }
-        ]
-      },
-      {
-        idBranch: 'QTKD',
-        NameBranch: 'Quản trị kinh doanh',
-        value: '3',
-        Class: [
-          {
-            NameClass: '17QTKD1',
-            value: '1'
-          },
-          {
-            NameClass: '17QTKD2',
-            value: '2'
-          },
-          {
-            NameClass: '17QTKD3',
-            value: '3'
-          }
-        ]
-      },
-      {
-        idBranch: 'DD',
-        NameBranch: 'Điều dưỡng',
-        value: '4',
-        Class: [
-          {
-            NameClass: '17DD1',
-            value: '1'
-          },
-          {
-            NameClass: '17DD2',
-            value: '2'
-          },
-          {
-            NameClass: '17DD3',
-            value: '3'
-          }
-        ]
-      },
-      {
-        idBranch: 'KT',
-        NameBranch: 'Kinh tế',
-        value: '5',
-        Class: [
-          {
-            NameClass: '17KT1',
-            value: '1'
-          },
-          {
-            NameClass: '17KT2',
-            value: '2'
-          },
-          {
-            NameClass: '17KT3',
-            value: '3'
-          }
-        ]
-      },
-    ]
   }  
   
   render() {
@@ -172,7 +32,7 @@ class Search extends Component {
       );
     };
     const searchItems = (text) => {
-      let newData = this.student.filter(item => {
+      let newData = student.filter(item => {
         const itemData = `${item.idStudent.toUpperCase()}`;
         const textData = text.toUpperCase();
       if(text.length >0 ){
@@ -212,7 +72,7 @@ class Search extends Component {
       const item = route.params
       if(item == undefined){
       }else{
-        this.student.push(item.item)
+        student.push(item.item)
       }
       const renderHeader = () => {
         return (
@@ -240,6 +100,7 @@ class Search extends Component {
                   }}
                   onPress={()=>{
                     navigation.navigate('AddStudent')
+                    console.log(student)
                   }}
             >Thêm sinh viên</Button>
             
@@ -269,7 +130,7 @@ class Search extends Component {
                       borderRadius: 10,
                     }}
                     onPress={() => {
-                      // navigation.navigate('InforStudent', {item: item})
+                      navigation.navigate('InforStudent', {item: item})
                       console.log(item)
                     }}
                   >Chi Tiết</Button>
@@ -368,7 +229,7 @@ class Search extends Component {
                   selectedTextStyle={styles.selectedTextStylesv}
                   inputSearchStyle={styles.inputSearchStylesv}
                   iconStyle={styles.iconStylesv}
-                  data={this.branch}
+                  data={Branch}
                   search
                   maxHeight={300}
                   labelField="NameBranch"
@@ -403,7 +264,7 @@ class Search extends Component {
                     if(idStudent==''||nameStudent==''||point==''){
                       alert('Bạn nhập thiếu dữ liệu')
                     }else{
-                      if(this.student.map(function(e){ return e.idStudent }).includes(data.idStudent)){
+                      if(student.map(function(e){ return e.idStudent }).includes(data.idStudent)){
                         alert('Sinh viên đã có trong danh sách')
                         setIdStudent('')
                         setItem('')
