@@ -5,14 +5,14 @@ import Point from './point';
 import Calender from './calender';
 import Search from './list'; 
 import { LogBox } from "react-native"
-
+import { User } from './data';
 
 LogBox.ignoreAllLogs(true)
 
   const Tab = createBottomTabNavigator();
 
 
-  function User() {
+  function infor() {
     return (
       <ScrollView >
         <View style={styles.main}>
@@ -21,7 +21,7 @@ LogBox.ignoreAllLogs(true)
           source={{uri: './image/IMG_0828.JPG'}} />
           <View style={styles.inforUser}>
             <Text >
-              Name
+              Name: 
             </Text>
             <Text >
               Lớp: 17DTH3
@@ -38,7 +38,7 @@ LogBox.ignoreAllLogs(true)
   export default function HomeScreen() {
     return (
         <Tab.Navigator>
-          <Tab.Screen name="Cá nhân" component={User} />
+          <Tab.Screen name="Cá nhân" component={infor} />
           <Tab.Screen name="Sinh Viên" component={Search} />
           <Tab.Screen name="Công việc" component={Point} />
           <Tab.Screen name="Lịch trình" component={Calender} />

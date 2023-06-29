@@ -3,9 +3,8 @@ import React, { useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './page/user';
-import axios from 'axios';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { LogBox } from "react-native"
+import { User } from './page/data';
 
 LogBox.ignoreAllLogs(true)
 const Stack = createNativeStackNavigator();
@@ -55,17 +54,14 @@ class App extends React.Component{
         )
     }
     function Login({ navigation }) {
-      const dataUser={
-          User: 'A',
-          Pass: 'a'
-      }
       const [userName, setUserName]=useState('')
       const [passWord, setPassWord]=useState('')
       const check = () => {
         if(userName == '' || passWord == ''){
           alert('Vui lòng nhập tài khoản và mật khẩu')
+          console.log(User)
         }else{
-          if(userName == dataUser.User && passWord == dataUser.Pass){
+          if(User.map(e => e.userName).includes(userName) && User.map(e => e.passWord).includes(passWord)){
             navigation.navigate('Home')
           }else{
             alert('Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại')

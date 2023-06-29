@@ -143,7 +143,8 @@ export const student = [
     Phone: '0938773',
     Sex: 'nam',
     Address: 'adgdfbfhgf',
-    Work: [] 
+    Work: [],
+    idBranch: 'CNTT'
   },
   {
     idStudent: '13162817',
@@ -153,7 +154,8 @@ export const student = [
     Phone: '34324324',
     Sex: 'nam',
     Address: 'sadfsdaf',
-    Work: []
+    Work: [],
+    idBranch: 'CNTT'
   },
   {
     idStudent: '13148198',
@@ -163,7 +165,8 @@ export const student = [
     Phone: '3123453',
     Sex: 'Nữ',
     Address: 'ádfsdfs',
-    Work: []
+    Work: [],
+    idBranch: 'NNA'
   },
   {
     idStudent: '131728145',
@@ -173,7 +176,8 @@ export const student = [
     Phone: '234454',
     Sex: 'Nam',
     Address: 'fdasfsda',
-    Work: []
+    Work: [],
+    idBranch: 'CNTT'
   },
   {
     idStudent: '13162823',
@@ -183,7 +187,8 @@ export const student = [
     Phone: '',
     Sex: '',
     Address: '',
-    Work: []
+    Work: [],
+    idBranch: 'CNTT'
   },
   {
     idStudent: '13148128',
@@ -193,7 +198,8 @@ export const student = [
     Phone: '',
     Sex: '',
     Address: '',
-    Work: []
+    Work: [],
+    idBranch: 'NNA'
   },
   {
     idStudent: '131728195',
@@ -203,7 +209,8 @@ export const student = [
     Phone: '',
     Sex: '',
     Address: '',
-    Work: []
+    Work: [],
+    idBranch: 'CNTT'
   },
   {
     idStudent: '13162873',
@@ -213,7 +220,8 @@ export const student = [
     Phone: '',
     Sex: '',
     Address: '',
-    Work: []
+    Work: [],
+    idBranch: 'CNTT'
   },
   {
     idStudent: '13148132',
@@ -223,6 +231,18 @@ export const student = [
     Phone: '',
     Sex: '',
     Address: '',
-    Work: []
+    Work: [],
+    idBranch: 'CNTT'
+  },
+]
+export const User = [
+  {
+    idUser: 1,
+    userName: 'Admin',
+    passWord: 'admin123'
+  },{
+    idUser: 2,
+    userName: 'A',
+    passWord: 'a'
   },
 ]

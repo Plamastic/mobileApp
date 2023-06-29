@@ -5,7 +5,7 @@ import { Button, ButtonGroup } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
 import { LogBox } from "react-native"
-import { student, work, Branch } from './search';
+import { student, work, Branch } from './data';
 
 LogBox.ignoreAllLogs(true)
 
@@ -17,8 +17,6 @@ function Listcomplete({ route, navigation }) {
     work.splice(work.map(function(e){
       return e.title;
     }).indexOf(data.dataNew.title),1,data.dataNew)
-    
-    console.log(student)
   }
   const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
   return (
@@ -140,8 +138,14 @@ function Listincomplete({ route, navigation }) {
       work.splice(work.map(function(e){ return e.title}).indexOf(data.dataItem.title),1,data.dataItem)
       navigation.navigate('Listcomplete',{dataNew: data.dataItem})
       navigation.navigate('Listincomplete')
+      if(data.dataItem.join.map(function(e){ return e.idStudent }).length > 0){
+        for( i = 0; i < data.dataItem.join.map(function(e){ return e.idStudent }).length; i++ ){
+          
+          data.dataItem.join[i].Work.push(data.dataItem.title)
+          student.splice( i, 1, data.dataItem.join[i] )
+        }
+      }
       
-      console.log( data.dataItem.join.map(function(e){ return e.idStudent }))
     }
   }else if(data.dataAdd != undefined){
     work.push(data.dataAdd)

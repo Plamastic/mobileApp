@@ -4,7 +4,7 @@ import { Button } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
 import { LogBox } from "react-native"
-import { student, work, Branch } from './search';
+import { student, Branch } from './data';
 
 
 LogBox.ignoreAllLogs(true)
@@ -49,10 +49,19 @@ class Search extends Component {
       return(
         <ScrollView style={{ flex: 1, margin: 10}}>
           <Text style={styles.titleWork}>{data.NameStudent}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Lớp: </Text>{data.NameClass}</Text>
           <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Mã số sinh viên: </Text>{data.idStudent}</Text>
+          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Lớp: </Text>{data.NameClass}</Text>
+          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Chuyên ngành: </Text>{Branch.find(e => e.idBranch == data.idBranch).NameBranch}</Text>
           <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH: </Text>{data.point}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Khoa: </Text>{data.NameBranch}</Text>
+          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Công việc đã tham gia: </Text> </Text><FlatList
+              data={data.Work}
+              renderItem={({item}) => (
+                <View >
+                  <Text style={styles.inforWork}>{item}</Text>
+                </View>
+              )}
+              keyExtractor={item => item.id}
+            />
           <Button 
               buttonStyle={{
                 backgroundColor: 'rgba(90, 154, 230, 1)',
@@ -100,7 +109,6 @@ class Search extends Component {
                   }}
                   onPress={()=>{
                     navigation.navigate('AddStudent')
-                    console.log(student)
                   }}
             >Thêm sinh viên</Button>
             
@@ -131,7 +139,6 @@ class Search extends Component {
                     }}
                     onPress={() => {
                       navigation.navigate('InforStudent', {item: item})
-                      console.log(item)
                     }}
                   >Chi Tiết</Button>
                 </View>
