@@ -1,47 +1,52 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Point from './point';
+import Point from './work';
 import Calender from './calender';
 import Search from './list'; 
 import { LogBox } from "react-native"
-import { User } from './data';
-
+import { Ionicons } from '@expo/vector-icons';
 LogBox.ignoreAllLogs(true)
 
   const Tab = createBottomTabNavigator();
-
-
-  function infor() {
-    return (
-      <ScrollView >
-        <View style={styles.main}>
-          <Image 
-          style={styles.imgUser}
-          source={{uri: './image/IMG_0828.JPG'}} />
-          <View style={styles.inforUser}>
-            <Text >
-              Name: 
-            </Text>
-            <Text >
-              Lớp: 17DTH3
-            </Text>
-            <Text>
-              MSSV: 131700694
-            </Text>
+  export default function HomeScreen({route}) {
+    data = route.params.item
+    function infor() {
+      return (
+        <ScrollView >
+          <View style={styles.main}>
+            <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Họ Và Tên:</Text> {data.nameLecturer}</Text>
+            <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Email:</Text> {data.email}</Text>
+            <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Địa Chỉ:</Text> {data.location}</Text>
           </View>
-          
-        </View>
-      </ScrollView>
-    );
-  }
-  export default function HomeScreen() {
+        </ScrollView>
+      );
+    }
+    
     return (
-        <Tab.Navigator>
-          <Tab.Screen name="Cá nhân" component={infor} />
-          <Tab.Screen name="Sinh Viên" component={Search} />
-          <Tab.Screen name="Công việc" component={Point} />
-          <Tab.Screen name="Lịch trình" component={Calender} />
+        <Tab.Navigator
+          initialRouteName="Cá Nhân"
+          screenOptions={{
+            tabBarActiveTintColor: '#FF0000',
+          }}
+        >
+          <Tab.Screen 
+            name="Cá Nhân" 
+            component={infor} 
+            
+          />
+          <Tab.Screen 
+            name="Sinh Viên" 
+            component={Search} 
+          />
+          <Tab.Screen 
+            name="Công việc" 
+            component={Point} 
+          />
+          <Tab.Screen 
+            name="Lịch trình" 
+            component={Calender} 
+          />
         </Tab.Navigator>
     );
   }
@@ -49,17 +54,19 @@ LogBox.ignoreAllLogs(true)
   const styles = StyleSheet.create({
     main:{
       flex: 1,
-      flexDirection: 'row'
+      marginTop: 50,
     },
     imgUser: {
-      width: 160,
-      height: 160,
+      width: 200,
+      height: 200,
       borderRadius: 100,
       margin: 15
     },
-    inforUser:{
+    inforWork: {
       flex: 1,
-      alignItems:'center',
-      justifyContent: 'center'
-    }
+      fontSize: 20,
+      padding: 10,
+      marginRight: 10,
+      
+    },
   });

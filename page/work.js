@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
 import { LogBox } from "react-native"
 import { student, work, Branch } from './data';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 LogBox.ignoreAllLogs(true)
 
@@ -28,6 +30,11 @@ function Listcomplete({ route, navigation }) {
             <Text style={styles.title}>{item.title}</Text>
             <View style={styles.btninfor}>
               <Button
+                buttonStyle={{
+                  backgroundColor: 'rgba(90, 154, 230, 1)',
+                  borderColor: 'transparent',
+                  borderRadius: 10,
+                }}
                 size="sm"
                 onPress={() => {
                   navigation.navigate('InforWorkCom',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
@@ -65,7 +72,15 @@ const InforWorkCom = ({route, navigation}) => {
             keyExtractor={item => item.id}
           /> 
         </View>
-      <Button onPress={() => navigation.goBack()} title="Quay lại" />
+        <Button 
+          buttonStyle={{
+            backgroundColor: 'rgba(90, 154, 230, 1)',
+            borderColor: 'transparent',
+            borderRadius: 30,
+          }}
+          onPress={() => navigation.goBack()} 
+          title="Quay lại" 
+        />
     </ScrollView>
   )
 }
@@ -75,13 +90,20 @@ function AddWork({navigation}) {
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
   const [point, setPoint] = useState(null)
+  const curDate = new Date();
+  const curDay = curDate.getDate();
+  const curMonth = curDate.getMonth() + 1;
+  const curYear = curDate.getFullYear();
+  const dateWork = curDay + '/' + curMonth + '/' + curYear
+  
   const data = {
     title: title,
     status: 'uncomplete',
     lecturer: lecturer,
     description: description,
     point: Number.parseInt(point,10),
-    join: []
+    join: [],
+    date: dateWork
   }
   return(
     <ScrollView>
@@ -113,7 +135,12 @@ function AddWork({navigation}) {
           onChangeText={description => setDescription(description)}
           value={description}
         />
-          <Button
+        <Button
+            buttonStyle={{
+              backgroundColor: 'rgba(90, 154, 230, 1)',
+              borderColor: 'transparent',
+              borderRadius: 30,
+            }}
             size="md"
             onPress={() => {
               if(title==''||lecturer==''){
@@ -124,10 +151,18 @@ function AddWork({navigation}) {
             }}
           >Thêm công việc</Button>
       </View>
+      <Button 
+        buttonStyle={{
+          backgroundColor: 'rgba(90, 154, 230, 1)',
+          borderColor: 'transparent',
+          borderRadius: 30,
+        }}
+        onPress={() => navigation.goBack()} 
+        title="Quay lại" 
+      />
     </ScrollView>
   )
 }
-
 function Listincomplete({ route, navigation }) {
   const data = route.params
   if(data == undefined){
@@ -160,6 +195,11 @@ function Listincomplete({ route, navigation }) {
   return (
     <View style={{ flex: 1}}>
       <Button 
+        buttonStyle={{
+          backgroundColor: 'rgba(90, 154, 230, 1)',
+          borderColor: 'transparent',
+          borderRadius: 30,
+        }}
         size="md"
         onPress={() => {
           navigation.navigate('AddWork')
@@ -172,10 +212,14 @@ function Listincomplete({ route, navigation }) {
             <Text style={styles.title}>{item.title}</Text>
             <View style={styles.btninfor}>
               <Button
+                buttonStyle={{
+                  backgroundColor: 'rgba(90, 154, 230, 1)',
+                  borderColor: 'transparent',
+                  borderRadius: 10,
+                }}
                 size="sm"
                 onPress={() => {
                   navigation.navigate('InforWork',{dataItem: item, index: work.map(function(e){ return e.title}).indexOf(item.title)})
-                  
                 }}
               >Chi Tiết</Button>
             </View>
@@ -245,6 +289,11 @@ function UpdateIndex({ route, navigation }){
             />
         </View>
         <Button
+          buttonStyle={{
+            backgroundColor: 'rgba(90, 154, 230, 1)',
+            borderColor: 'transparent',
+            borderRadius: 30,
+          }}
           size="md"
           onPress={() => {
             if(item.status=='uncomplete'){
@@ -275,6 +324,11 @@ function UpdateIndex({ route, navigation }){
                 <Text style={styles.titlesv}>{item.NameStudent}</Text>
                 <View style={styles.btninforsv}>
                   <Button
+                    buttonStyle={{
+                      backgroundColor: 'rgba(90, 154, 230, 1)',
+                      borderColor: 'transparent',
+                      borderRadius: 10,
+                    }}
                     size="sm"
                     onPress={()=>{
                       if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent) || studentWork.map(function(e){ return e.idStudent }).includes(item.idStudent)){
@@ -355,6 +409,11 @@ function UpdateIndex({ route, navigation }){
           {renderLabel()}
         </View>
         <Button
+          buttonStyle={{
+            backgroundColor: 'rgba(90, 154, 230, 1)',
+            borderColor: 'transparent',
+            borderRadius: 30,
+          }}
           size="md"
           onPress={() => {
             navigation.navigate('Listincomplete', {ListStudentWork: studentWork, indexSV: index})
@@ -402,7 +461,15 @@ const InforWork = ({ route,navigation }) => {
           containerStyle={{ marginBottom: 20 }}
         />
       </View>
-      <Button onPress={() => navigation.goBack()} title="Quay lại" />
+      <Button 
+        buttonStyle={{
+          backgroundColor: 'rgba(90, 154, 230, 1)',
+          borderColor: 'transparent',
+          borderRadius: 30,
+        }}
+        onPress={() => navigation.goBack()} 
+        title="Quay lại" 
+      />
     </ScrollView>
   )
 }
@@ -437,7 +504,7 @@ const studentWork = []
 export default class Point extends React.Component {
   render() {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator >
           <Tab.Screen name="Chưa hoàn thành" component={Incomplete} />
           <Tab.Screen name="Đã hoàn thành" component={Complete} />
       </Tab.Navigator>
@@ -448,7 +515,8 @@ export default class Point extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15
+    marginTop: 15,
+    
   },
   item: {
     flex: 1,
@@ -464,7 +532,8 @@ const styles = StyleSheet.create({
   btninfor: {
     flex: 1,
     flexDirection:'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    borderRadius: 10
   },
   titleWork:{
     fontSize: 28,
@@ -480,7 +549,8 @@ const styles = StyleSheet.create({
   In: {
     flex: 1,
     justifyContent: "center",
-    marginTop: 30
+    marginTop: 30,
+    marginBottom: 5
   },
   input: {
     height: 40,

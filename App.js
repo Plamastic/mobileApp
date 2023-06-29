@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, Button, Image } from 'react-native';
 import React, { useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -62,7 +62,7 @@ class App extends React.Component{
           console.log(User)
         }else{
           if(User.map(e => e.userName).includes(userName) && User.map(e => e.passWord).includes(passWord)){
-            navigation.navigate('Home')
+            navigation.navigate('Home', {item: User.find(e => e.userName == userName)})
           }else{
             alert('Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại')
           }
@@ -70,6 +70,12 @@ class App extends React.Component{
       }
       return(
         <ScrollView>
+              <View style={styles.img}><Image
+                style={styles.tinyLogo}
+                source={{
+                  uri: 'https://qldt.dntu.edu.vn/images/dntu-logo.png'
+                }}
+              /></View>
               <Text style={styles.text}>Đăng Nhập</Text>
               <View style={styles.In}>
                 <TextInput
@@ -118,38 +124,49 @@ class App extends React.Component{
 
 const styles = StyleSheet.create({
   In: {
-  flex: 1,
-  justifyContent: "center",
-  margin: 20
+    flex: 1,
+    justifyContent: "center",
+    margin: 20
   },
   text: {
-  flex:1,
-  justifyContent:'center',
-  textAlign: 'center',
-  marginTop: 200,
-  fontSize: 35,
-  fontWeight: 'bold',
-  marginBottom:50,
-  color: "#007AFF"
+    flex:1,
+    justifyContent:'center',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: "#007AFF"
   },
   input: {
-  height: 40,
-  borderColor: 'gray',
-  borderWidth: 1,
-  borderRadius: 20,
-  textAlign: 'center',
-  marginTop: 5,
-  secureTextEntry: true
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    textAlign: 'center',
+    marginTop: 5,
+    secureTextEntry: true
   },
-  button: {
-  marginLeft: 110,
-  width: 200,
-  padding: 16,
-  elevation: 5,
-  backgroundColor: "#156DD1",
-  borderRadius: 30,
-  paddingVertical: 5,
-  paddingHorizontal:20
+    button: {
+    marginLeft: 110,
+    width: 200,
+    padding: 16,
+    elevation: 5,
+    backgroundColor: "#156DD1",
+    borderRadius: 30,
+    paddingVertical: 5,
+    paddingHorizontal:20
+  },
+  tinyLogo: {
+    width: 80,
+    height: 80,
+  },
+  img:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 160,
+    marginBottom: 60
   }
-  })
+
+})
 export default App;
+

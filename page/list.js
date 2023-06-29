@@ -26,7 +26,7 @@ class Search extends Component {
           style={{
             height: 1,
             width: '100%',
-            backgroundColor: '#CED0CE',
+            backgroundColor: 'black',
           }}
         />
       );
@@ -87,16 +87,16 @@ class Search extends Component {
         return (
           <View>
             <TextInput
-              style={{ height: 50, borderColor: '#00B8E6', borderWidth: 1, borderRadius: 20 }}
+              style={{ height: 50, borderColor: 'rgba(90, 154, 230, 1)', borderWidth: 1, borderRadius: 30, textAlign: 'center' }}
               keyboardType = 'numeric'
-              placeholder="   Tìm kiếm"
+              placeholder="Tìm kiếm"
               onChangeText={text => {
                 searchItems(text)
               }}
               value={this.state.value}
             />
             <Button
-                  titleStyle={{ fontWeight: '700' }}
+                  titleStyle={{ fontWeight: '600' }}
                   buttonStyle={{
                     backgroundColor: 'rgba(90, 154, 230, 1)',
                     borderColor: 'transparent',
@@ -139,6 +139,10 @@ class Search extends Component {
                     }}
                     onPress={() => {
                       navigation.navigate('InforStudent', {item: item})
+                      this.setState({
+                        data: [],
+                        value: '',
+                      });
                     }}
                   >Chi Tiết</Button>
                 </View>

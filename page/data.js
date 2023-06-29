@@ -239,10 +239,16 @@ export const User = [
   {
     idUser: 1,
     userName: 'Admin',
-    passWord: 'admin123'
+    passWord: 'admin123',
+    nameLecturer: 'Trương Đông Nam',
+    email: 'Nam01@gmail.com',
+    location: 'TP HCM'
   },{
     idUser: 2,
     userName: 'A',
-    passWord: 'a'
+    passWord: 'a',
+    nameLecturer: 'Duy Nam',
+    email: 'Nam02@gmail.com',
+    location: 'Biên Hòa'
   },
 ]

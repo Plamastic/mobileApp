@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
-import { student } from './point';
+import { student } from './work';
 import { LogBox } from "react-native"
 
 LogBox.ignoreAllLogs(true)
