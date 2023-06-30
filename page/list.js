@@ -20,7 +20,7 @@ class Search extends Component {
   }  
   
   render() {
-    const renderSeparator = () => {
+    const RenderSeparator = () => {
       return (
         <View
           style={{
@@ -48,20 +48,28 @@ class Search extends Component {
       const data = route.params.item
       return(
         <ScrollView style={{ flex: 1, margin: 10}}>
-          <Text style={styles.titleWork}>{data.NameStudent}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Mã số sinh viên: </Text>{data.idStudent}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Lớp: </Text>{data.NameClass}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Chuyên ngành: </Text>{Branch.find(e => e.idBranch == data.idBranch).NameBranch}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH: </Text>{data.point}</Text>
-          <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Công việc đã tham gia: </Text> </Text><FlatList
-              data={data.Work}
-              renderItem={({item}) => (
-                <View >
-                  <Text style={styles.inforWork}>{item}</Text>
-                </View>
-              )}
-              keyExtractor={item => item.id}
-            />
+          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF'}}><Text style={styles.titleWork}>{data.NameStudent}</Text></View>
+          <View style={styles.item}><Text style={styles.title}>Mã số sinh viên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.idStudent}</Text></View></View> 
+          <RenderSeparator></RenderSeparator>
+          <View style={styles.item}><Text style={styles.title}>Lớp:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.NameClass}</Text></View></View> 
+          <RenderSeparator></RenderSeparator>
+          <View style={styles.item}><Text style={styles.title}>Chuyên ngành:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{Branch.find(e => e.idBranch == data.idBranch).NameBranch}</Text></View></View> 
+          <RenderSeparator></RenderSeparator>
+          <View style={styles.item}><Text style={styles.title}>Điểm CTXH:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.point}</Text></View></View> 
+          <RenderSeparator></RenderSeparator>
+          <View style={styles.item}><Text style={styles.title}>Công việc:</Text>
+            
+              <FlatList
+                data={data.Work}
+                renderItem={({item}) => (
+                  <View style={styles.btninfor}>
+                    <Text style={{fontSize: 18}}>{item}</Text>
+                  </View>
+                )}
+                keyExtractor={item => item.id}
+              />
+            
+          </View> 
           <Button 
               buttonStyle={{
                 backgroundColor: 'rgba(90, 154, 230, 1)',
@@ -77,12 +85,7 @@ class Search extends Component {
         </ScrollView>
       )
     }
-    const List = ({ route, navigation }) => {
-      const item = route.params
-      if(item == undefined){
-      }else{
-        student.push(item.item)
-      }
+    const List = ({ navigation }) => {
       const renderHeader = () => {
         return (
           <View>
@@ -109,6 +112,10 @@ class Search extends Component {
                   }}
                   onPress={()=>{
                     navigation.navigate('AddStudent')
+                    this.setState({
+                      data: [],
+                      value: '',
+                    });
                   }}
             >Thêm sinh viên</Button>
             
@@ -149,7 +156,7 @@ class Search extends Component {
               </View>
             )}
             keyExtractor={item => item.idStudent}
-            ItemSeparatorComponent={renderSeparator}
+            ItemSeparatorComponent={RenderSeparator}
             ListHeaderComponent={renderHeader}
           />
         </View>
@@ -166,9 +173,10 @@ class Search extends Component {
       const data = {
         idStudent: idStudent,
         NameClass: '',
-        NameBranch: '',
+        idBranch: '',
         NameStudent: nameStudent,
-        point: Number.parseInt(point,10)
+        point: Number.parseInt(point,10), 
+        Work: []
       }
       function renderLabel() {
         const dataI = []
@@ -207,7 +215,7 @@ class Search extends Component {
       return(
         <ScrollView>
           <View style={styles.In}>
-            <View style={{flex: 1, alignItems: 'center', marginBottom: 50}}>
+            <View style={{flex: 1, alignItems: 'center', marginBottom: 30}}>
               <Text style={{fontSize: 26, color: '#1984FF', fontWeight: '500'}}>Thêm sinh viên</Text>
             </View>
             <TextInput
@@ -283,11 +291,11 @@ class Search extends Component {
                         setValue('')
                       }else{
                         data.NameClass = item.NameClass
-                        data.NameBranch = value.NameBranch
-                        navigation.navigate('List',{item: data})
+                        data.idBranch = value.idBranch
+                        student.push(data)
                         alert('Thêm sinh viên thành công')
+                        navigation.navigate('List')
                       }
-                      
                     }
                   }}
             >Thêm sinh viên</Button>
@@ -334,17 +342,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'row',
     justifyContent: 'flex-end'
+    
   },
   title: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginTop: 10
+    fontSize: 20,
+    fontWeight: '600'
   },
   titleWork:{
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: '600',
-    color: '#014EFF',
+    color: '#F7FBFF',
     padding: 10,
+    textAlign: 'center',
   },
   inforWork: {
     fontSize: 20,

@@ -52,6 +52,7 @@ function Listcomplete({ route, navigation }) {
 const InforWorkCom = ({route, navigation}) => {
   const data = route.params.dataItem
   const index = route.params.index
+  console.log(student)
   return(
     <ScrollView style={{ flex: 1}}>
       <Text style={styles.titleWork}>{data.title}</Text>
@@ -96,6 +97,7 @@ function AddWork({navigation}) {
   const curYear = curDate.getFullYear();
   const dateWork = curDay + '/' + curMonth + '/' + curYear
   
+
   const data = {
     title: title,
     status: 'uncomplete',
@@ -172,15 +174,14 @@ function Listincomplete({ route, navigation }) {
     }else{
       work.splice(work.map(function(e){ return e.title}).indexOf(data.dataItem.title),1,data.dataItem)
       navigation.navigate('Listcomplete',{dataNew: data.dataItem})
-      navigation.navigate('Listincomplete')
+      
       if(data.dataItem.join.map(function(e){ return e.idStudent }).length > 0){
         for( i = 0; i < data.dataItem.join.map(function(e){ return e.idStudent }).length; i++ ){
-          
           data.dataItem.join[i].Work.push(data.dataItem.title)
-          student.splice( i, 1, data.dataItem.join[i] )
+          
+          student.splice( student.map(e => e.idStudent).indexOf(data.dataItem.join[i].idStudent), 1, data.dataItem.join[i] )
         }
       }
-      
     }
   }else if(data.dataAdd != undefined){
     work.push(data.dataAdd)
@@ -314,7 +315,7 @@ function UpdateIndex({ route, navigation }){
     const [forcus, setForcus] = useState(false);
     
     function listSV() {
-      const studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point}) => ({idStudent, NameStudent, NameClass, point}))
+      const studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point, Work, idBranch}) => ({idStudent, NameStudent, NameClass, point, Work, idBranch}))
       return(
         <View style={{ flex: 1, marginTop: 50}}>
           <FlatList
