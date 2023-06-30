@@ -25,7 +25,13 @@ class App extends React.Component{
         }
       }
         return(
-          <ScrollView>
+          <ScrollView >
+            <View style={styles.img}><Image
+                style={styles.tinyLogo}
+                source={{
+                  uri: 'https://qldt.dntu.edu.vn/images/dntu-logo.png'
+                }}
+              /></View>
             <Text style={styles.text}>Quên mật khẩu</Text>
               <View style={styles.In}>
                 <TextInput

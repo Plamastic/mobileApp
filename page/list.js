@@ -48,7 +48,7 @@ class Search extends Component {
       const data = route.params.item
       return(
         <ScrollView style={{ flex: 1, margin: 10}}>
-          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF'}}><Text style={styles.titleWork}>{data.NameStudent}</Text></View>
+          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 60, marginTop: 30}}><Text style={styles.titleWork}>{data.NameStudent}</Text></View>
           <View style={styles.item}><Text style={styles.title}>Mã số sinh viên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.idStudent}</Text></View></View> 
           <RenderSeparator></RenderSeparator>
           <View style={styles.item}><Text style={styles.title}>Lớp:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.NameClass}</Text></View></View> 
@@ -342,7 +342,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'row',
     justifyContent: 'flex-end'
-    
   },
   title: {
     fontSize: 20,

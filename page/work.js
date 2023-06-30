@@ -11,6 +11,18 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 LogBox.ignoreAllLogs(true)
 
+
+const RenderSeparator = () => {
+  return (
+    <View
+      style={{
+        height: 1,
+        width: '100%',
+        backgroundColor: 'black',
+      }}
+    />
+  );
+};
 function Listcomplete({ route, navigation }) {
   const data = route.params
   if(data == undefined){
@@ -52,32 +64,38 @@ function Listcomplete({ route, navigation }) {
 const InforWorkCom = ({route, navigation}) => {
   const data = route.params.dataItem
   const index = route.params.index
-  console.log(student)
+  
   return(
     <ScrollView style={{ flex: 1}}>
-      <Text style={styles.titleWork}>{data.title}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text>{data.point}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Trạng thái:</Text> {data.status}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Giảng viên phụ trách:</Text> {data.lecturer}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Thời gian diễn ra:</Text> {data.date}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Mô tả: </Text >{data.description}</Text>
-        <Text style={{color: '#013ECB', fontSize: 20, margin: 10}}>Danh sách sinh viên tham gia: </Text >
-        <View style={{margin: 10, fontSize:20}}>
-          <FlatList
-            data={work[index].join}
-            renderItem={({item}) => (
-              <View >
-                <Text style={styles.title}>{item.NameStudent}</Text>
-              </View>
-            )}
-            keyExtractor={item => item.id}
-          /> 
-        </View>
+      <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 60, marginTop: 30}}><Text style={styles.titleWork}>{data.title}</Text></View>
+      <View style={styles.item}><Text style={styles.title}>Điểm CTXH:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.point}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Trạng thái:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.status}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Giảng viên phụ trách:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.lecturer}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Thời gian diễn ra:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.date}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Mô tả:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.description}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}>
+        <Text style={styles.title}>Sinh viên tham gia:</Text>
+        <FlatList
+          data={work[index].join}
+          renderItem={({item}) => (
+            <View style={styles.btninfor}>
+              <Text style={{fontSize: 18}}>{item.NameStudent}</Text>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        /> 
+      </View>
         <Button 
           buttonStyle={{
             backgroundColor: 'rgba(90, 154, 230, 1)',
             borderColor: 'transparent',
             borderRadius: 30,
+            marginTop: 30
           }}
           onPress={() => navigation.goBack()} 
           title="Quay lại" 
@@ -430,24 +448,29 @@ const InforWork = ({ route,navigation }) => {
   const index = route.params.index
   return(
     <ScrollView style={{ flex: 1}}>
-      <Text style={styles.titleWork}>{data.title}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Điểm CTXH:</Text>{data.point}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Trạng thái:</Text> {data.status}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Giảng viên phụ trách:</Text> {data.lecturer}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Thời gian diễn ra:</Text> {data.date}</Text>
-      <Text style={styles.inforWork}><Text style={{color: '#013ECB'}}>Mô tả: </Text >{data.description}</Text>
-        <Text style={{color: '#013ECB', fontSize: 20, margin: 10}}>Danh sách sinh viên tham gia: </Text > 
-        <View style={{margin: 10, fontSize:20}}>
-          <FlatList
-            data={work[index].join}
-            renderItem={({item}) => (
-              <View >
-                <Text style={styles.title}>{item.NameStudent}</Text>
-              </View>
-            )}
-            keyExtractor={item => item.id}
-          />
-        </View>
+      <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 60, marginTop: 30}}><Text style={styles.titleWork}>{data.title}</Text></View>
+      <View style={styles.item}><Text style={styles.title}>Điểm CTXH:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.point}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Trạng thái:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.status}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Giảng viên phụ trách:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.lecturer}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Thời gian diễn ra:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.date}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Mô tả:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.description}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}>
+        <Text style={styles.title}>Sinh viên tham gia:</Text>
+        <FlatList
+          data={work[index].join}
+          renderItem={({item}) => (
+            <View style={styles.btninfor}>
+              <Text style={{fontSize: 18}}>{item.NameStudent}</Text>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        /> 
+      </View>
       <View style={{marginTop: 50}}>
         <ButtonGroup
           selectedIndex={''}
@@ -524,11 +547,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 8,
     marginHorizontal: 16,
-    marginTop: 20
   },
   title: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: '600',
+    marginRight: 10
   },
   btninfor: {
     flex: 1,
@@ -539,8 +562,9 @@ const styles = StyleSheet.create({
   titleWork:{
     fontSize: 28,
     fontWeight: '600',
-    color: '#014EFF',
+    color: '#F7FBFF',
     padding: 10,
+    textAlign: 'center',
   },
   inforWork: {
     fontSize: 20,
