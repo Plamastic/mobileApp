@@ -6,7 +6,8 @@ export const work = [
     lecturer: 'Trương Đông Nam',
     date: '14/6/2321',
     description: 'sử dụng hàm navigate như trên, gửi kém biến bình thường.',
-    join: []
+    join: [],
+    Quantity: 20
   },
   {
     title: 'Tình nguyện viên hè 2023 ',
@@ -15,7 +16,8 @@ export const work = [
     lecturer: 'Nguyễn Thị Liệu',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: []
+    join: [],
+    Quantity: 15
   },
   {
     title: 'Cộng tác viên bơi lội',
@@ -24,7 +26,8 @@ export const work = [
     lecturer: 'Duy Nam',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: []
+    join: [],
+    Quantity: 30
   },
   {
     title: 'Cộng tác viên bơi lội2',
@@ -33,7 +36,18 @@ export const work = [
     lecturer: 'Nhật Minh',
     date: '14/6/2321',
     description: 'fdsakhfd',
-    join: []
+    join: [],
+    Quantity: 25
+  },
+  {
+    title: 'Cộng tác viên bơi',
+    point: 3,
+    status: 'uncomplete',
+    lecturer: 'a Minh',
+    date: '14/6/2321',
+    description: 'fdsakhfd',
+    join: [],
+    Quantity: 25
   },
 ]
 export const Branch = [
@@ -144,7 +158,8 @@ export const student = [
     Sex: 'nam',
     Address: 'adgdfbfhgf',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
   {
     idStudent: '13162817',
@@ -155,7 +170,8 @@ export const student = [
     Sex: 'nam',
     Address: 'sadfsdaf',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
   {
     idStudent: '13148198',
@@ -166,7 +182,8 @@ export const student = [
     Sex: 'Nữ',
     Address: 'ádfsdfs',
     Work: [],
-    idBranch: 'NNA'
+    idBranch: 'NNA',
+    Pass: 'a'
   },
   {
     idStudent: '131728145',
@@ -177,7 +194,8 @@ export const student = [
     Sex: 'Nam',
     Address: 'fdasfsda',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
   {
     idStudent: '13162823',
@@ -188,7 +206,8 @@ export const student = [
     Sex: '',
     Address: '',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
   {
     idStudent: '13148128',
@@ -199,7 +218,8 @@ export const student = [
     Sex: '',
     Address: '',
     Work: [],
-    idBranch: 'NNA'
+    idBranch: 'NNA',
+    Pass: 'a'
   },
   {
     idStudent: '131728195',
@@ -210,7 +230,8 @@ export const student = [
     Sex: '',
     Address: '',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
   {
     idStudent: '13162873',
@@ -221,7 +242,8 @@ export const student = [
     Sex: '',
     Address: '',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
   {
     idStudent: '13148132',
@@ -232,7 +254,8 @@ export const student = [
     Sex: '',
     Address: '',
     Work: [],
-    idBranch: 'CNTT'
+    idBranch: 'CNTT',
+    Pass: 'a'
   },
 ]
 export const User = [
@@ -250,5 +273,8 @@ export const User = [
     nameLecturer: 'Duy Nam',
     email: 'Nam02@gmail.com',
     location: 'Biên Hòa'
-  },
+  }
+]
+export const regisList = [
+
 ]

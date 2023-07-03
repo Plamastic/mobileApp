@@ -32,7 +32,7 @@ function Listcomplete({ route, navigation }) {
       return e.title;
     }).indexOf(data.dataNew.title),1,data.dataNew)
   }
-  const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
+  const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join, Quantity}) => ({title, point, status, lecturer, date, description, join, Quantity}));
   return (
     <View style={{ flex: 1}}>
       <FlatList
@@ -64,7 +64,6 @@ function Listcomplete({ route, navigation }) {
 const InforWorkCom = ({route, navigation}) => {
   const data = route.params.dataItem
   const index = route.params.index
-  
   return(
     <ScrollView style={{ flex: 1}}>
       <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 60, marginTop: 30}}><Text style={styles.titleWork}>{data.title}</Text></View>
@@ -75,6 +74,8 @@ const InforWorkCom = ({route, navigation}) => {
       <View style={styles.item}><Text style={styles.title}>Giảng viên phụ trách:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.lecturer}</Text></View></View> 
       <RenderSeparator></RenderSeparator>
       <View style={styles.item}><Text style={styles.title}>Thời gian diễn ra:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.date}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Số lượng Sinh Viên Tham Gia:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.join.length}/{data.Quantity}</Text></View></View> 
       <RenderSeparator></RenderSeparator>
       <View style={styles.item}><Text style={styles.title}>Mô tả:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.description}</Text></View></View> 
       <RenderSeparator></RenderSeparator>
@@ -109,6 +110,7 @@ function AddWork({navigation}) {
   const [lecturer, setLecturer] = useState('')
   const [description, setDescription] = useState('')
   const [point, setPoint] = useState(null)
+  const [Quantity, setQuantity] = useState(null)
   const curDate = new Date();
   const curDay = curDate.getDate();
   const curMonth = curDate.getMonth() + 1;
@@ -123,7 +125,8 @@ function AddWork({navigation}) {
     description: description,
     point: Number.parseInt(point,10),
     join: [],
-    date: dateWork
+    date: dateWork,
+    Quantity: Quantity
   }
   return(
     <ScrollView>
@@ -148,6 +151,15 @@ function AddWork({navigation}) {
           placeholder="Giảng viên phụ trách"
           onChangeText={lecturer => setLecturer(lecturer)}
           value={lecturer}
+        />
+        <TextInput
+          style={styles.input}
+          keyboardType = 'numeric'
+          placeholder="Số lượng sinh viên tham gia"
+          onChangeText={(Quantity) => {
+            setQuantity(Quantity)
+          }}
+          value={Quantity}
         />
         <TextInput
           style={styles.input}
@@ -196,9 +208,9 @@ function Listincomplete({ route, navigation }) {
       if(data.dataItem.join.map(function(e){ return e.idStudent }).length > 0){
         for( i = 0; i < data.dataItem.join.map(function(e){ return e.idStudent }).length; i++ ){
           data.dataItem.join[i].Work.push(data.dataItem.title)
-          
           student.splice( student.map(e => e.idStudent).indexOf(data.dataItem.join[i].idStudent), 1, data.dataItem.join[i] )
         }
+
       }
     }
   }else if(data.dataAdd != undefined){
@@ -209,7 +221,7 @@ function Listincomplete({ route, navigation }) {
   }else{
     work.splice(data.index,1)
   }
-  const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, point, status, lecturer, date, description, join}) => ({title, point, status, lecturer, date, description, join}));
+  const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, point, status, lecturer, date, description, join, Quantity}) => ({title, point, status, lecturer, date, description, join, Quantity}));
   
   return (
     <View style={{ flex: 1}}>
@@ -318,8 +330,10 @@ function UpdateIndex({ route, navigation }){
             if(item.status=='uncomplete'){
               navigation.navigate('Listincomplete',{dataItem: item, index: index})
             }else{
+              for( i = 0; i <= item.join.length - 1; i++){
+                item.join[item.join.map(function(e){ return e.idStudent }).indexOf(item.join[i].idStudent)].point = item.join[item.join.map(function(e){ return e.idStudent }).indexOf(item.join[i].idStudent)].point + pointSV
+              }
               navigation.navigate('Listincomplete',{dataItem: item})
-              
             }
           }}
         >Cập nhật</Button>
@@ -333,7 +347,7 @@ function UpdateIndex({ route, navigation }){
     const [forcus, setForcus] = useState(false);
     
     function listSV() {
-      const studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point, Work, idBranch}) => ({idStudent, NameStudent, NameClass, point, Work, idBranch}))
+      const studentN = student.filter((dataitem) => dataitem.NameClass == item.NameClass).map(({idStudent, NameStudent, NameClass, point, Work, idBranch, status='giao việc'}) => ({idStudent, NameStudent, NameClass, point, Work, idBranch, status}))
       return(
         <View style={{ flex: 1, marginTop: 50}}>
           <FlatList
@@ -350,22 +364,29 @@ function UpdateIndex({ route, navigation }){
                     }}
                     size="sm"
                     onPress={()=>{
+                      
                       if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent) || studentWork.map(function(e){ return e.idStudent }).includes(item.idStudent)){
-                        alert('Sinh viên đã được giao việc')
+                        alert('Sinh viên đã có trong danh sách')
                       }else{
-                        student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)].point = item.point + pointSV
-                        studentWork.push(student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)])
+                        if(work[index].join.length == work[index].Quantity || studentWork.length == work[index].Quantity){
+                          alert('Đã đủ số lượng sinh viên')
+                        }else{
+                          studentWork.push(student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)])
+                        }
+                        
                       }
                     }}
-                  >Giao việc</Button>
+                  >{studentN[studentN.map(function(e){ return e.idStudent }).indexOf(item.idStudent)].status}</Button>
                 </View>
               </View>
             )}
             keyExtractor={item => item.id}
           />
+          
         </View>
       )
     }
+    
     function renderLabel() {
       const dataI = []
       if(value==''){
@@ -398,6 +419,7 @@ function UpdateIndex({ route, navigation }){
               }}  
             />
             {listSV()}
+            
           </View>
       )
     };
@@ -443,7 +465,7 @@ function UpdateIndex({ route, navigation }){
   }
 }
 
-const InforWork = ({ route,navigation }) => {
+export const InforWork = ({ route,navigation }) => {
   const data = route.params.dataItem
   const index = route.params.index
   return(
@@ -456,6 +478,8 @@ const InforWork = ({ route,navigation }) => {
       <View style={styles.item}><Text style={styles.title}>Giảng viên phụ trách:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.lecturer}</Text></View></View> 
       <RenderSeparator></RenderSeparator>
       <View style={styles.item}><Text style={styles.title}>Thời gian diễn ra:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.date}</Text></View></View> 
+      <RenderSeparator></RenderSeparator>
+      <View style={styles.item}><Text style={styles.title}>Số lượng Sinh Viên Tham Gia:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.join.length}/{data.Quantity}</Text></View></View> 
       <RenderSeparator></RenderSeparator>
       <View style={styles.item}><Text style={styles.title}>Mô tả:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.description}</Text></View></View> 
       <RenderSeparator></RenderSeparator>

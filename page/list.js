@@ -4,8 +4,8 @@ import { Button } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
 import { LogBox } from "react-native"
-import { student, Branch } from './data';
-
+import { student, Branch, work } from './data';
+import { InforWork } from './work';
 
 LogBox.ignoreAllLogs(true)
 const Stack = createNativeStackNavigator();
@@ -58,12 +58,25 @@ class Search extends Component {
           <View style={styles.item}><Text style={styles.title}>Điểm CTXH:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.point}</Text></View></View> 
           <RenderSeparator></RenderSeparator>
           <View style={styles.item}><Text style={styles.title}>Công việc:</Text>
-            
               <FlatList
                 data={data.Work}
                 renderItem={({item}) => (
                   <View style={styles.btninfor}>
-                    <Text style={{fontSize: 18}}>{item}</Text>
+                    <Button
+                      buttonStyle={{
+                        backgroundColor: '#128E23',
+                        borderColor: 'transparent',
+                        borderRadius: 10,
+                        margin: 2
+                      }}
+                      size="sm"
+                      onPress={() => {
+                        navigation.navigate('InforWork',{
+                          dataItem: work[work.map(function(e){return e.title}).indexOf(item)], 
+                          index: work.map(function(e){return e.title}).indexOf(item)
+                        })
+                      }}
+                    >{item}</Button>
                   </View>
                 )}
                 keyExtractor={item => item.id}
@@ -321,6 +334,7 @@ class Search extends Component {
           <Stack.Screen options={{headerShown: false}} name="List" component={List} />
           <Stack.Screen options={{headerShown: false}} name="InforStudent" component={InforStudent} />
           <Stack.Screen options={{headerShown: false}} name="AddStudent" component={AddStudent} />
+          <Stack.Screen options={{headerShown: false}} name="InforWork" component={InforWork} />
         </Stack.Navigator>
       </SafeAreaView>
     )

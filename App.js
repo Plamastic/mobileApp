@@ -4,7 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './page/user';
 import { LogBox } from "react-native"
-import { User } from './page/data';
+import { User, student } from './page/data';
+import Student from './page/student';
 
 LogBox.ignoreAllLogs(true)
 const Stack = createNativeStackNavigator();
@@ -67,8 +68,16 @@ class App extends React.Component{
           alert('Vui lòng nhập tài khoản và mật khẩu')
           console.log(User)
         }else{
-          if(User.map(e => e.userName).includes(userName) && User.map(e => e.passWord).includes(passWord)){
-            navigation.navigate('Home', {item: User.find(e => e.userName == userName)})
+          if(User.map(e => e.userName).includes(userName) && User.map(e => e.passWord).includes(passWord) || student.map(e => e.idStudent).includes(userName) && student.map(e => e.Pass).includes(passWord)){
+            if(User.map(e => e.userName).includes(userName)){
+              navigation.navigate('Home', {item: User.find(e => e.userName == userName)})
+              setUserName('')
+              setPassWord('')
+            }else{
+              navigation.navigate('Student', {item: student.find(e => e.idStudent == userName)})
+              setUserName('')
+              setPassWord('')
+            }
           }else{
             alert('Tài khoản hoặc mật khẩu không chính xác, vui lòng nhập lại')
           }
@@ -121,6 +130,7 @@ class App extends React.Component{
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen options={{headerShown: false}} name="Login" component={Login} />
           <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
+          <Stack.Screen options={{headerShown: false}} name="Student" component={Student} />
           <Stack.Screen options={{headerShown: false}} name="ForgotPassword" component={ForgotPassword} />
         </Stack.Navigator>
       </NavigationContainer>

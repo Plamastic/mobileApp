@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Point from './work';
-import Calender from './calender';
+import Calender from './registrationList';
 import Search from './list'; 
 import { LogBox } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
@@ -48,6 +48,10 @@ LogBox.ignoreAllLogs(true)
           <Tab.Screen 
             name="Công việc" 
             component={Point} 
+          />
+          <Tab.Screen 
+            name="Danh Sách ĐK" 
+            component={Calender} 
           />
         </Tab.Navigator>
     );
