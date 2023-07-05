@@ -7,9 +7,10 @@ import { LogBox } from "react-native"
 import { User, student } from './page/data';
 import Student from './page/student';
 
+
 LogBox.ignoreAllLogs(true)
 const Stack = createNativeStackNavigator();
-
+export const dataStudent = []
 class App extends React.Component{
 
   render() {
@@ -66,7 +67,6 @@ class App extends React.Component{
       const check = () => {
         if(userName == '' || passWord == ''){
           alert('Vui lòng nhập tài khoản và mật khẩu')
-          console.log(User)
         }else{
           if(User.map(e => e.userName).includes(userName) && User.map(e => e.passWord).includes(passWord) || student.map(e => e.idStudent).includes(userName) && student.map(e => e.Pass).includes(passWord)){
             if(User.map(e => e.userName).includes(userName)){
@@ -74,7 +74,8 @@ class App extends React.Component{
               setUserName('')
               setPassWord('')
             }else{
-              navigation.navigate('Student', {item: student.find(e => e.idStudent == userName)})
+              dataStudent.push(student.find(e => e.idStudent == userName))
+              navigation.navigate('Student')
               setUserName('')
               setPassWord('')
             }

@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button } from '@rneui/themed';
 import Point from './work';
 import Calender from './registrationList';
 import Search from './list'; 
 import { LogBox } from "react-native"
-import { Ionicons } from '@expo/vector-icons';
 LogBox.ignoreAllLogs(true)
 
   const Tab = createBottomTabNavigator();
   export default function HomeScreen({route}) {
     data = route.params.item
-    function infor() {
+    
+    function infor({navigation}) {
       return (
         <ScrollView >
           <View style={styles.main}>
@@ -24,11 +26,16 @@ LogBox.ignoreAllLogs(true)
             <View style={styles.item}><Text style={styles.title}>Họ Và Tên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.nameLecturer}</Text></View></View> 
             <View style={styles.item}><Text style={styles.title}>Email:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.email}</Text></View></View> 
             <View style={styles.item}><Text style={styles.title}>Địa Chỉ:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.location}</Text></View></View>
+            <Button 
+              style={{marginTop: 50}}
+              onPress={() => {
+                navigation.goBack()
+              }} 
+            >Đăng Xuất</Button>
           </View>
         </ScrollView>
       );
     }
-    
     return (
         <Tab.Navigator
           initialRouteName="Cá Nhân"

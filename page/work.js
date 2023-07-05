@@ -5,9 +5,7 @@ import { Button, ButtonGroup } from '@rneui/themed';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Dropdown } from 'react-native-element-dropdown';
 import { LogBox } from "react-native"
-import { student, work, Branch } from './data';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { student, work, Branch, regisList } from './data';
 
 LogBox.ignoreAllLogs(true)
 
@@ -27,12 +25,12 @@ function Listcomplete({ route, navigation }) {
   const data = route.params
   if(data == undefined){
   }else{
-    
     work.splice(work.map(function(e){
       return e.title;
     }).indexOf(data.dataNew.title),1,data.dataNew)
   }
   const List = work.filter((dataitem) => dataitem.status == 'complete').map(({title, point, status, lecturer, date, description, join, Quantity}) => ({title, point, status, lecturer, date, description, join, Quantity}));
+  console.log(regisList)
   return (
     <View style={{ flex: 1}}>
       <FlatList
@@ -195,22 +193,27 @@ function AddWork({navigation}) {
     </ScrollView>
   )
 }
-function Listincomplete({ route, navigation }) {
+export function Listincomplete({ route, navigation }) {
   const data = route.params
   if(data == undefined){
   }else if(data.dataItem != undefined ){
     if(data.dataItem.status=='uncomplete'){
       work.splice(data.index,1,data.dataItem)
     }else{
+      if(regisList.length > 0){
+        for( i = 0; i < regisList.length; i++){
+          if(regisList[i].workr == data.dataItem.title){
+            regisList.splice(i, 1)
+          }
+        }
+      }
       work.splice(work.map(function(e){ return e.title}).indexOf(data.dataItem.title),1,data.dataItem)
       navigation.navigate('Listcomplete',{dataNew: data.dataItem})
-      
       if(data.dataItem.join.map(function(e){ return e.idStudent }).length > 0){
         for( i = 0; i < data.dataItem.join.map(function(e){ return e.idStudent }).length; i++ ){
           data.dataItem.join[i].Work.push(data.dataItem.title)
           student.splice( student.map(e => e.idStudent).indexOf(data.dataItem.join[i].idStudent), 1, data.dataItem.join[i] )
         }
-
       }
     }
   }else if(data.dataAdd != undefined){
@@ -364,7 +367,6 @@ function UpdateIndex({ route, navigation }){
                     }}
                     size="sm"
                     onPress={()=>{
-                      
                       if(work[index].join.map(function(e){ return e.idStudent }).includes(item.idStudent) || studentWork.map(function(e){ return e.idStudent }).includes(item.idStudent)){
                         alert('Sinh viên đã có trong danh sách')
                       }else{
@@ -373,7 +375,6 @@ function UpdateIndex({ route, navigation }){
                         }else{
                           studentWork.push(student[student.map(function(e){ return e.idStudent }).indexOf(item.idStudent)])
                         }
-                        
                       }
                     }}
                   >{studentN[studentN.map(function(e){ return e.idStudent }).indexOf(item.idStudent)].status}</Button>
@@ -564,7 +565,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 15,
-    
   },
   item: {
     flex: 1,
