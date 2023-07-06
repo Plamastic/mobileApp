@@ -10,7 +10,9 @@ import { dataStudent } from '../App';
 LogBox.ignoreAllLogs(true)
 
 
+
 function Job({route, navigation}){
+
   if(route.params == undefined){}
   const List = work.filter((dataitem) => dataitem.status == 'uncomplete').map(({title, point, status, lecturer, date, description, join, Quantity,}) => ({title, point, status, lecturer, date, description, join, Quantity}));
   if(regisList.length == 0){
@@ -22,38 +24,46 @@ function Job({route, navigation}){
 
   return(
       <View style={{ flex: 1}}>
-          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 30}}><Text style={styles.titleWork}>Danh Sách Công Việc Mở</Text></View>
-      <FlatList
-          data={List}
-          renderItem={({item}) => (
-          <View style={styles.item}>
-              <Text style={styles.title}>{item.title}</Text>
-              <View style={styles.btninfor}>
-              <Button
-                  buttonStyle={{
-                    backgroundColor: 'rgba(90, 154, 230, 1)',
-                    borderColor: 'transparent',
-                    borderRadius: 10,
-                  }}
-                  size="sm"
-                  onPress={() => {
-                      if(regisList.filter((e) => e.studentr == dataStudent[0].idStudent).map(e => e.workr).includes(item.title)){
-                          alert('Đã Đăng Ký')
-                      }else{
-                          alert('Đăng ký thành công')
-                          navigation.navigate('subJob', { data: item })
-                          regisList.push({workr: item.title, studentr: dataStudent[0].idStudent })
-                          List.splice(List.map(function(e){ return e.title; }).indexOf(item.title, 0),1)
-                          navigation.navigate('Job', { data: item })
-                      }
-                      
-                  }}
-              >Đăng Ký</Button>
-              </View>
-          </View>
-          )}
-          keyExtractor={item => item.id}
-      />
+        <FlatList
+            data={List}
+            renderItem={({item}) => (
+            <View style={styles.item}>
+                <Text style={styles.title}>{item.title}</Text>
+                <View style={styles.btninfor}>
+                <Button
+                    buttonStyle={{
+                      backgroundColor: 'rgba(90, 154, 230, 1)',
+                      borderColor: 'transparent',
+                      borderRadius: 10,
+                    }}
+                    size="sm"
+                    onPress={() => {
+                      console.log(item)
+                      console.log(regisList)
+                        if(regisList.filter((e) => e.studentr == dataStudent[0].idStudent).map(e => e.workr).includes(item.title)){
+                            alert('Đã Đăng Ký')
+                        }else{
+                          if(work[work.map(e => e.title).indexOf(item.title,0)].join.map(function(e){ return e.idStudent }).includes(dataStudent[0].idStudent)){
+                            alert('Bạn đã có trong danh sách')
+                          }else{
+                            if(work[work.map(e => e.title).indexOf(item.title,0)].join.length == work[work.map(e => e.title).indexOf(item.title,0)].Quantity){
+                              alert('Đã đủ số lượng sinh viên')
+                            }else{
+                              alert('Đăng ký thành công')
+                              navigation.navigate('subJob', { data: item })
+                              regisList.push({workr: item.title, studentr: dataStudent[0].idStudent })
+                              List.splice(List.map(function(e){ return e.title; }).indexOf(item.title, 0),1)
+                              navigation.navigate('Job', { data: item })
+                            }
+                          } 
+                        }  
+                    }}
+                >Đăng Ký</Button>
+                </View>
+            </View>
+            )}
+            keyExtractor={item => item.id}
+        />
       </View>
   )
 }  
@@ -64,32 +74,31 @@ function subJob({ route, navigation }){
   const List = regisList.map(({workr, studentr}) => ({workr, studentr})).filter(e => e.studentr == dataStudent[0].idStudent);
   return(
       <View style={{ flex: 1}}>
-          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 30}}><Text style={styles.titleWork}>Công Việc Đã Đăng Ký</Text></View>
-      <FlatList
-          data={List}
-          renderItem={({item}) => (
-          <View style={styles.item}>
-              <Text style={styles.title}>{item.workr}</Text>
-              <View style={styles.btninfor}>
-              <Button
-                  buttonStyle={{
-                  backgroundColor: 'rgba(90, 154, 230, 1)',
-                  borderColor: 'transparent',
-                  borderRadius: 10,
-                  }}
-                  size="sm"
-                  onPress={() => {
-                    alert('Hủy Đăng ký thành công')
-                    navigation.navigate('Job',{data: item})
-                    regisList.splice(regisList.map(e => e.workr).indexOf(item.workr, 0), 1)
-                    navigation.navigate('subJob',{data: item})
-                  }}
-              >Hủy Đăng Ký</Button>
-              </View>
-          </View>
-          )}
-          keyExtractor={item => item.id}
-      />
+        <FlatList
+            data={List}
+            renderItem={({item}) => (
+            <View style={styles.item}>
+                <Text style={styles.title}>{item.workr}</Text>
+                <View style={styles.btninfor}>
+                <Button
+                    buttonStyle={{
+                    backgroundColor: 'rgba(90, 154, 230, 1)',
+                    borderColor: 'transparent',
+                    borderRadius: 10,
+                    }}
+                    size="sm"
+                    onPress={() => {
+                      alert('Hủy Đăng ký thành công')
+                      navigation.navigate('Job',{data: item})
+                      regisList.splice(regisList.map(e => e.workr).indexOf(item.workr, 0), 1)
+                      navigation.navigate('subJob',{data: item})
+                    }}
+                >Hủy Đăng Ký</Button>
+                </View>
+            </View>
+            )}
+            keyExtractor={item => item.id}
+        />
       </View>
   )
 }

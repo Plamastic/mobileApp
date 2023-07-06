@@ -9,7 +9,6 @@ import { student, work, Branch, regisList } from './data';
 
 LogBox.ignoreAllLogs(true)
 
-
 const RenderSeparator = () => {
   return (
     <View

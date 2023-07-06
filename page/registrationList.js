@@ -40,7 +40,6 @@ const InforS = ({ route, navigation }) => {
                   borderRadius: 10,
                 }}
                 onPress={() => {
-                  
                   if(work[work.map(e => e.title).indexOf(item.workr, 0)].join.map(function(e){ return e.idStudent }).includes(item.studentr) ){
                     alert('Sinh viên đã có trong danh sách')
                   }else{
@@ -48,7 +47,10 @@ const InforS = ({ route, navigation }) => {
                       alert('Đã đủ số lượng sinh viên')
                     }else{
                       work[work.map(e => e.title).indexOf(item.workr, 0)].join.push(student[student.map(e => e.idStudent).indexOf(item.studentr, 0)])
-                      navigation.navigate('ListcompleteS')
+                      regisList.splice(regisList.findIndex(function(e){
+                        return e.studentr==item.studentr && e.workr==route.params.dataItem
+                      }), 1)
+                      navigation.navigate('ListcompleteS', {dataI: regisList})
                       alert('Đã thêm sinh viên vào danh sách công việc')
                     }
                   }
@@ -75,15 +77,17 @@ const InforS = ({ route, navigation }) => {
   )
 }
 
-function ListcompleteS({ navigation }) {
-  let work = []
-    work = regisList.map(e => e.workr).filter(function(e){
-      return work.includes(e) ? '' : work.push(e)
-    })
+export function ListcompleteS({ route, navigation }) {
+  let workS = []
+  if(regisList.length > 0){
+    workS = regisList.map(e => e.workr).filter(function(e){
+      return workS.includes(e) ? '' : workS.push(e)
+    }) 
+  }
   return(
     <View style={{ flex: 1}}>
       <FlatList
-        data={work}
+        data={workS}
         renderItem={({item}) => (
           <View style={styles.item}>
             <Text style={styles.title}>{item}</Text>
