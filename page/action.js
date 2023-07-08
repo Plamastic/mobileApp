@@ -102,17 +102,6 @@ function subJob({ route, navigation }){
       </View>
   )
 }
-const New = ({navigation}) => {
-  return (
-    <View
-      style={{
-        height: 1,
-        width: '100%',
-        backgroundColor: 'black',
-      }}
-    />
-  );
-};
 
 function Incomplete() {
   return (

@@ -15,7 +15,7 @@ LogBox.ignoreAllLogs(true)
     
     function infor({navigation}) {
       return (
-        <ScrollView >
+        <View style={{flex: 1}} >
           <View style={styles.main}>
             <View style={styles.img}><Image
                 style={styles.tinyLogo}
@@ -26,14 +26,24 @@ LogBox.ignoreAllLogs(true)
             <View style={styles.item}><Text style={styles.title}>Họ Và Tên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.nameLecturer}</Text></View></View> 
             <View style={styles.item}><Text style={styles.title}>Email:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.email}</Text></View></View> 
             <View style={styles.item}><Text style={styles.title}>Địa Chỉ:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.location}</Text></View></View>
-            <Button 
-              style={{marginTop: 50}}
+            
+          </View>
+          <Button 
+              titleStyle={{ fontWeight: '600' }}
+              buttonStyle={{
+                backgroundColor: 'rgba(90, 154, 230, 1)',
+                borderColor: 'transparent',
+                borderRadius: 30,
+              }}
+              containerStyle={{
+                marginHorizontal: 90,
+                marginVertical: 10,
+              }}
               onPress={() => {
                 navigation.goBack()
               }} 
             >Đăng Xuất</Button>
-          </View>
-        </ScrollView>
+        </View>
       );
     }
     return (
@@ -46,7 +56,6 @@ LogBox.ignoreAllLogs(true)
           <Tab.Screen 
             name="Cá Nhân" 
             component={infor} 
-            
           />
           <Tab.Screen 
             name="Sinh Viên" 
@@ -76,26 +85,24 @@ LogBox.ignoreAllLogs(true)
       margin: 15
     },
     title: {
-      flex: 1,
       fontSize: 20,
       color: 'blue'
     },
     tinyLogo: {
       width: 100,
       height: 100,
-    },btninfor: {
+    },
+    btninfor: {
       flex: 1,
       flexDirection:'row',
       justifyContent: 'flex-end'
     },
     img:{
-      flex: 1,
       flexDirection: 'row',
       justifyContent: 'center',
       marginBottom: 30
     },
     item: {
-      flex: 1,
       flexDirection: 'row',
       marginVertical: 8,
       marginHorizontal: 16,

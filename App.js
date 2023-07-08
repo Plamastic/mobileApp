@@ -4,8 +4,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './page/user';
 import { LogBox } from "react-native"
-import { User, student } from './page/data';
 import Student from './page/student';
+import { student, User } from './page/data';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 LogBox.ignoreAllLogs(true)
@@ -14,6 +16,9 @@ export const dataStudent = []
 class App extends React.Component{
 
   render() {
+    // AsyncStorage.getItem('work', (err, e) => {
+    //   console.log(JSON.parse(e)) 
+    // })
     function ForgotPassword({navigation}) {
       const [userName, setUserName]=useState('')
       const [email, setEmail]=useState('')
@@ -31,7 +36,7 @@ class App extends React.Component{
             <View style={styles.img}><Image
                 style={styles.tinyLogo}
                 source={{
-                  uri: 'https://qldt.dntu.edu.vn/images/dntu-logo.png'
+                  uri: 'https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh-1.png'
                 }}
               /></View>
             <Text style={styles.text}>Quên mật khẩu</Text>
@@ -89,10 +94,10 @@ class App extends React.Component{
               <View style={styles.img}><Image
                 style={styles.tinyLogo}
                 source={{
-                  uri: 'https://qldt.dntu.edu.vn/images/dntu-logo.png'
+                  uri: 'https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh-1.png'
                 }}
               /></View>
-              <Text style={styles.text}>Đăng Nhập</Text>
+              <Text style={styles.text}>CỔNG ĐĂNG NHẬP DNTU</Text>
               <View style={styles.In}>
                 <TextInput
                     style={styles.input}
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'center',
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     color: "#007AFF"
   },

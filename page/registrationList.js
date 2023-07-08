@@ -57,7 +57,6 @@ const InforS = ({ route, navigation }) => {
                 }}
               >Phê duyệt</Button>
             </View>
-            
           </View>
           
         )}

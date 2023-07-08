@@ -47,61 +47,62 @@ class Search extends Component {
     const InforStudent = ({ route, navigation }) => {
       const data = route.params.item
       return(
-        <ScrollView style={{ flex: 1, margin: 10}}>
-          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 60, marginTop: 30}}><Text style={styles.titleWork}>{data.NameStudent}</Text></View>
-          <View style={styles.item}><Text style={styles.title}>Mã số sinh viên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.idStudent}</Text></View></View> 
-          <RenderSeparator></RenderSeparator>
-          <View style={styles.item}><Text style={styles.title}>Lớp:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.NameClass}</Text></View></View> 
-          <RenderSeparator></RenderSeparator>
-          <View style={styles.item}><Text style={styles.title}>Chuyên ngành:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{Branch.find(e => e.idBranch == data.idBranch).NameBranch}</Text></View></View> 
-          <RenderSeparator></RenderSeparator>
-          <View style={styles.item}><Text style={styles.title}>Điểm CTXH:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.point}</Text></View></View> 
-          <RenderSeparator></RenderSeparator>
-          <View style={styles.item}><Text style={styles.title}>Công việc:</Text>
-              <FlatList
-                data={data.Work}
-                renderItem={({item}) => (
-                  <View style={styles.btninfor}>
-                    <Button
-                      buttonStyle={{
-                        backgroundColor: '#128E23',
-                        borderColor: 'transparent',
-                        borderRadius: 10,
-                        margin: 2
-                      }}
-                      size="sm"
-                      onPress={() => {
-                        navigation.navigate('InforWork',{
-                          dataItem: work[work.map(function(e){return e.title}).indexOf(item)], 
-                          index: work.map(function(e){return e.title}).indexOf(item)
-                        })
-                      }}
-                    >{item}</Button>
-                  </View>
-                )}
-                keyExtractor={item => item.id}
-              />
-            
-          </View> 
+        <View style={{flex: 1}}>
+          <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 10, marginTop: 10}}><Text style={styles.titleWork}>{data.NameStudent}</Text></View>
+          <ScrollView style={{ flex: 1, margin: 10}}>
+            <View style={styles.item}><Text style={styles.title}>Mã số sinh viên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.idStudent}</Text></View></View> 
+            <RenderSeparator></RenderSeparator>
+            <View style={styles.item}><Text style={styles.title}>Lớp:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.NameClass}</Text></View></View> 
+            <RenderSeparator></RenderSeparator>
+            <View style={styles.item}><Text style={styles.title}>Chuyên ngành:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{Branch.find(e => e.idBranch == data.idBranch).NameBranch}</Text></View></View> 
+            <RenderSeparator></RenderSeparator>
+            <View style={styles.item}><Text style={styles.title}>Điểm CTXH:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.point}</Text></View></View> 
+            <RenderSeparator></RenderSeparator>
+            <View style={styles.item}><Text style={styles.title}>Công việc:</Text>
+                <FlatList
+                  data={data.Work}
+                  renderItem={({item}) => (
+                    <View style={styles.btninfor}>
+                      <Button
+                        buttonStyle={{
+                          backgroundColor: '#128E23',
+                          borderColor: 'transparent',
+                          borderRadius: 10,
+                          margin: 2
+                        }}
+                        size="sm"
+                        onPress={() => {
+                          navigation.navigate('InforWork',{
+                            dataItem: work[work.map(function(e){return e.title}).indexOf(item)], 
+                            index: work.map(function(e){return e.title}).indexOf(item)
+                          })
+                        }}
+                      >{item}</Button>
+                    </View>
+                  )}
+                  keyExtractor={item => item.id}
+                />
+              
+            </View> 
+          </ScrollView>
           <Button 
-              buttonStyle={{
-                backgroundColor: 'rgba(90, 154, 230, 1)',
-                borderColor: 'transparent',
-                borderRadius: 30,
-              }}
-              containerStyle={{
-                flex: 1,
-                marginHorizontal: 150,
-                marginTop: 30
-              }}
-              onPress={() => navigation.goBack()} title="Quay lại" />
-        </ScrollView>
+            buttonStyle={{
+              backgroundColor: 'rgba(90, 154, 230, 1)',
+              borderColor: 'transparent',
+              borderRadius: 30,
+            }}
+            containerStyle={{
+              marginHorizontal: 90,
+              marginBottom: 10
+            }}
+            onPress={() => navigation.goBack()} title="Quay lại" />
+        </View>
       )
     }
     const List = ({ navigation }) => {
       const renderHeader = () => {
         return (
-          <View>
+          <View style={{flex: 1}}>
             <TextInput
               style={{ height: 50, borderColor: 'rgba(90, 154, 230, 1)', borderWidth: 1, borderRadius: 30, textAlign: 'center' }}
               keyboardType = 'numeric'
@@ -112,26 +113,25 @@ class Search extends Component {
               value={this.state.value}
             />
             <Button
-                  titleStyle={{ fontWeight: '600' }}
-                  buttonStyle={{
-                    backgroundColor: 'rgba(90, 154, 230, 1)',
-                    borderColor: 'transparent',
-                    borderRadius: 30,
-                  }}
-                  containerStyle={{
-                    flex: 1,
-                    marginHorizontal: 90,
-                    marginVertical: 10,
-                  }}
-                  onPress={()=>{
-                    navigation.navigate('AddStudent')
-                    this.setState({
-                      data: [],
-                      value: '',
-                    });
-                  }}
+              titleStyle={{ fontWeight: '600' }}
+              buttonStyle={{
+                backgroundColor: 'rgba(90, 154, 230, 1)',
+                borderColor: 'transparent',
+                borderRadius: 30,
+              }}
+              containerStyle={{
+                flex: 1,
+                marginHorizontal: 90,
+                marginVertical: 10,
+              }}
+              onPress={()=>{
+                navigation.navigate('AddStudent')
+                this.setState({
+                  data: [],
+                  value: '',
+                });
+              }}
             >Thêm sinh viên</Button>
-            
           </View>
         );
       };
@@ -140,7 +140,6 @@ class Search extends Component {
           style={{
             flex: 1,
             padding: 25,
-            width: '98%',
             alignSelf: 'center',
             justifyContent: 'center',
           }}>
@@ -200,7 +199,7 @@ class Search extends Component {
           })
         }
         return(
-            <View>
+          <View>
               <Dropdown
                 style={[styles.dropdownsv, forcus && { borderColor: 'blue' }]}
                 placeholderStyle={styles.placeholderStylesv}
@@ -226,105 +225,102 @@ class Search extends Component {
         )
       };
       return(
-        <ScrollView>
+        <View style={{flex: 1}}>
           <View style={styles.In}>
-            <View style={{flex: 1, alignItems: 'center', marginBottom: 30}}>
-              <Text style={{fontSize: 26, color: '#1984FF', fontWeight: '500'}}>Thêm sinh viên</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              keyboardType = 'numeric'
-              placeholder="Mã số sinh viên"
-              onChangeText={idStudent => setIdStudent(idStudent)}
-              value={idStudent}
-            />
-            <TextInput
-              style={styles.input}
-              keyboardType = 'numeric'
-              placeholder="Điểm CTXH"
-              onChangeText={(pointsv) => {
-                setPoint(pointsv)
-              }}
-              value={point}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Tên sinh viên"
-              onChangeText={nameStudent => setNameStudent(nameStudent)}
-              value={nameStudent}
-            />
-            <ScrollView style={{flex: 1, flexDirection: 'column'}}>
-              <View >
-                <Dropdown
-                  style={[styles.dropdownsv, isFocus && { borderColor: 'blue' }]}
-                  placeholderStyle={styles.placeholderStylesv}
-                  selectedTextStyle={styles.selectedTextStylesv}
-                  inputSearchStyle={styles.inputSearchStylesv}
-                  iconStyle={styles.iconStylesv}
-                  data={Branch}
-                  search
-                  maxHeight={300}
-                  labelField="NameBranch"
-                  valueField="value"
-                  placeholder={!isFocus ? 'Chọn khoa' : ''}
-                  searchPlacvalueeholder="Nhập tên khoa"
-                  value={value}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(true)}
-                  onChange={item => {
-                    setValue(item);
-                    setIsFocus(true);
-                  }}
-                />
-                {renderLabel()}
+            <View style={{borderColor: '#C1D8FF', borderWidth: 1, borderRadius: 30, backgroundColor: '#83B1FF', marginBottom: 10}}><Text style={styles.titleWork}>Thêm Sinh Viên</Text></View>
+            <ScrollView>
+              <TextInput
+                style={styles.input}
+                keyboardType = 'numeric'
+                placeholder="Mã số sinh viên"
+                onChangeText={idStudent => setIdStudent(idStudent)}
+                value={idStudent}
+              />
+              <TextInput
+                style={styles.input}
+                keyboardType = 'numeric'
+                placeholder="Điểm CTXH"
+                onChangeText={(pointsv) => {
+                  setPoint(pointsv)
+                }}
+                value={point}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Tên sinh viên"
+                onChangeText={nameStudent => setNameStudent(nameStudent)}
+                value={nameStudent}
+              />
+              <View style={{flex: 1, flexDirection: 'column'}}>
+                <View >
+                  <Dropdown
+                    style={[styles.dropdownsv, isFocus && { borderColor: 'blue' }]}
+                    placeholderStyle={styles.placeholderStylesv}
+                    selectedTextStyle={styles.selectedTextStylesv}
+                    inputSearchStyle={styles.inputSearchStylesv}
+                    iconStyle={styles.iconStylesv}
+                    data={Branch}
+                    search
+                    maxHeight={300}
+                    labelField="NameBranch"
+                    valueField="value"
+                    placeholder={!isFocus ? 'Chọn khoa' : ''}
+                    searchPlacvalueeholder="Nhập tên khoa"
+                    value={value}
+                    onFocus={() => setIsFocus(true)}
+                    onBlur={() => setIsFocus(true)}
+                    onChange={item => {
+                      setValue(item);
+                      setIsFocus(true);
+                    }}
+                  />
+                  {renderLabel()}
+                </View>
               </View>
             </ScrollView>
-                
-            <Button
-                  titleStyle={{ fontWeight: '700' }}
-                  buttonStyle={{
-                    backgroundColor: 'rgba(90, 154, 230, 1)',
-                    borderColor: 'transparent',
-                    borderRadius: 30,
-                  }}
-                  containerStyle={{
-                    flex: 1,
-                    marginHorizontal: 110,
-                    marginVertical: 10,
-                  }}
-                  onPress={()=>{
-                    if(idStudent==''||nameStudent==''||point==''){
-                      alert('Bạn nhập thiếu dữ liệu')
-                    }else{
-                      if(student.map(function(e){ return e.idStudent }).includes(data.idStudent)){
-                        alert('Sinh viên đã có trong danh sách')
-                        setIdStudent('')
-                        setItem('')
-                        setPoint(null)
-                        setValue('')
-                      }else{
-                        data.NameClass = item.NameClass
-                        data.idBranch = value.idBranch
-                        student.push(data)
-                        alert('Thêm sinh viên thành công')
-                        navigation.navigate('List')
-                      }
-                    }
-                  }}
-            >Thêm sinh viên</Button>
-            <Button 
-              buttonStyle={{
-                backgroundColor: 'rgba(90, 154, 230, 1)',
-                borderColor: 'transparent',
-                borderRadius: 30,
-              }}
-              containerStyle={{
-                flex: 1,
-                marginHorizontal: 150,
-              }}
-              onPress={() => navigation.goBack()} title="Quay lại" />
           </View>
-        </ScrollView>
+          <Button
+            buttonStyle={{
+              backgroundColor: 'rgba(90, 154, 230, 1)',
+              borderColor: 'transparent',
+              borderRadius: 30,
+            }}
+            containerStyle={{
+              marginHorizontal: 110,
+              marginVertical: 5,
+            }}
+            onPress={()=>{
+              if(idStudent==''||nameStudent==''||point==''){
+                alert('Bạn nhập thiếu dữ liệu')
+              }else{
+                if(student.map(function(e){ return e.idStudent }).includes(data.idStudent)){
+                  alert('Sinh viên đã có trong danh sách')
+                  setIdStudent('')
+                  setItem('')
+                  setPoint(null)
+                  setValue('')
+                }else{
+                  data.NameClass = item.NameClass
+                  data.idBranch = value.idBranch
+                  student.push(data)
+                  alert('Thêm sinh viên thành công')
+                  navigation.navigate('List')
+                }
+              }
+            }}
+            >Thêm sinh viên</Button>
+          <Button 
+            buttonStyle={{
+              backgroundColor: 'rgba(90, 154, 230, 1)',
+              borderColor: 'transparent',
+              borderRadius: 30,
+              marginBottom: 10
+            }}
+            containerStyle={{
+              marginHorizontal: 110,
+            }}
+            onPress={() => navigation.goBack()} title="Quay lại" />
+        </View>
       )
       }
     
@@ -376,7 +372,7 @@ const styles = StyleSheet.create({
   In: {
     flex: 1,
     justifyContent: "center",
-    marginTop: 30
+    marginTop: 10
   },
   input: {
     height: 40,

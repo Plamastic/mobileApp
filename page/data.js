@@ -1,3 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
+
+
+
 export const work = [
   {
     title: 'Mùa hè xanh',
@@ -276,5 +280,11 @@ export const User = [
   }
 ]
 export const regisList = [
-
 ]
+
+// AsyncStorage.setItem('User',JSON.stringify(User))
+// AsyncStorage.setItem('Student',JSON.stringify(student))
+// AsyncStorage.setItem('Branch',JSON.stringify(Branch))
+// AsyncStorage.setItem('work',JSON.stringify(work))
+// AsyncStorage.setItem('regisList',JSON.stringify(regisList))
+// AsyncStorage.clear()
