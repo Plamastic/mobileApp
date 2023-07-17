@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, Image } from 'react-native';
+import { Button } from '@rneui/themed';
 import React, { useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -55,14 +56,27 @@ class App extends React.Component{
                     value={email}
                 />
               </View>
-              <View style={styles.button}>
                 <Button 
+                  buttonStyle={{
+                    backgroundColor: 'rgba(90, 154, 230, 1)',
+                    borderColor: 'transparent',
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    marginHorizontal: '30%',
+                  }}
+                  size="md"
                   title="Quên mật khẩu"
                   color="#FFFFFF"
                   onPress={() => forgot()}
                 />
-              </View>
-              <Button onPress={() => navigation.goBack()} title="Quay lại" />
+              <Button buttonStyle={{
+                    backgroundColor: 'rgba(90, 154, 230, 1)',
+                    borderColor: 'transparent',
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    marginHorizontal: '30%',
+                  }}
+                  onPress={() => navigation.goBack()} title="Quay lại" />
           </ScrollView>
         )
     }
@@ -113,21 +127,32 @@ class App extends React.Component{
                     value={passWord}
                 />
               </View>
-              <View style={styles.button}>
                 <Button 
+                  buttonStyle={{
+                    backgroundColor: 'rgba(90, 154, 230, 1)',
+                    borderColor: 'transparent',
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    marginHorizontal: '30%',
+                  }}
+                  size="md"
                   title="Đăng nhập"
-                  color="#FFFFFF"
                   onPress={() => check()}
                 />
-              </View>
-              <View >
                 <Button
+                    buttonStyle={{
+                      backgroundColor: 'rgba(90, 154, 230, 1)',
+                      borderColor: 'transparent',
+                      borderRadius: 30,
+                      marginBottom: 5,
+                      marginHorizontal: '30%',
+                    }}
+                    size="md"
                     title="Quên mật khẩu"
                     onPress={() => { 
                       navigation.navigate('ForgotPassword')
                     }}
                 />
-              </View>
         </ScrollView>
       )
     }
