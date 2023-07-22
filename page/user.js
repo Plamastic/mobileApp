@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Button } from '@rneui/themed';
 import Point from './work';
 import Calender from './registrationList';
@@ -16,33 +15,38 @@ LogBox.ignoreAllLogs(true)
     function infor({navigation}) {
       return (
         <View style={{flex: 1}} >
-          <View style={styles.main}>
-            <View style={styles.img}><Image
+          <ImageBackground resizeMode="cover" style={{flex: 1 }} source={{uri: 'https://i.pinimg.com/564x/87/7e/53/877e538625fcc12c0def1c0b0ed725ae.jpg'}}>
+            <View style={{flex: 1, alignItems: 'center', marginTop: 100}}>
+              <Image
                 style={styles.tinyLogo}
                 source={{
-                  uri: 'https://qldt.dntu.edu.vn/images/dntu-logo.png'
+                  uri: 'https://www.psdgraphics.com/file/user-icon.jpg'
                 }}
-            /></View>
-            <View style={styles.item}><Text style={styles.title}>Họ Và Tên:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.nameLecturer}</Text></View></View> 
-            <View style={styles.item}><Text style={styles.title}>Email:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.email}</Text></View></View> 
-            <View style={styles.item}><Text style={styles.title}>Địa Chỉ:</Text><View style={styles.btninfor}><Text style={{fontSize: 18}}>{data.location}</Text></View></View>
-            
-          </View>
-          <Button 
-              titleStyle={{ fontWeight: '600' }}
-              buttonStyle={{
-                backgroundColor: 'rgba(90, 154, 230, 1)',
-                borderColor: 'transparent',
-                borderRadius: 30,
-              }}
-              containerStyle={{
-                marginHorizontal: 90,
-                marginVertical: 10,
-              }}
-              onPress={() => {
-                navigation.goBack()
-              }} 
-            >Đăng Xuất</Button>
+              />
+              <View style={styles.item}><Text style={styles.title}>Mã số sinh viên:   </Text><Text style={{fontSize: 18, color: 'white'}}>{data.nameLecturer}</Text></View>
+              <View style={styles.item}><Text style={styles.title}>Email:   </Text><Text style={{fontSize: 18, color: 'white' }}>{data.email}</Text></View>
+              <View style={styles.item}><Text style={styles.title}>Địa Chỉ:   </Text><Text style={{fontSize: 18, color: 'white' }}>{data.location}</Text></View>
+              <View style={styles.item}><Text style={styles.title}>SDT:   </Text><Text style={{fontSize: 18, color: 'white' }}>{data.sdt}</Text></View>
+              <View style={styles.btninfor}>
+                <Button 
+                  titleStyle={{ fontWeight: '600' }}
+                  buttonStyle={{
+                    backgroundColor: 'rgba(90, 154, 230, 1)',
+                    borderColor: 'transparent',
+                    borderRadius: 30,
+                    marginBottom: 10
+                  }}
+                  containerStyle={{
+                    marginHorizontal: 90,
+                    marginVertical: 10,
+                  }}
+                  onPress={() => {
+                    navigation.goBack()
+                  }} 
+                >Đăng Xuất</Button>
+              </View>
+            </View>
+          </ImageBackground>
         </View>
       );
     }
@@ -54,6 +58,7 @@ LogBox.ignoreAllLogs(true)
           }}
         >
           <Tab.Screen 
+            options={{headerShown: false}}
             name="Cá Nhân" 
             component={infor} 
           />
@@ -74,10 +79,6 @@ LogBox.ignoreAllLogs(true)
   }
 
   const styles = StyleSheet.create({
-    main:{
-      flex: 1,
-      marginTop: 50,
-    },
     imgUser: {
       width: 200,
       height: 200,
@@ -86,25 +87,22 @@ LogBox.ignoreAllLogs(true)
     },
     title: {
       fontSize: 20,
-      color: 'blue'
+      color: 'white',
+      fontWeight: '700',
     },
     tinyLogo: {
-      width: 100,
-      height: 100,
-    },
-    btninfor: {
-      flex: 1,
-      flexDirection:'row',
-      justifyContent: 'flex-end'
-    },
-    img:{
-      flexDirection: 'row',
-      justifyContent: 'center',
-      marginBottom: 30
+      width: 180,
+      height: 180,
+      borderRadius: 100,
+      margin: 20
     },
     item: {
       flexDirection: 'row',
       marginVertical: 8,
       marginHorizontal: 16,
+    },
+    btninfor: {
+      flex: 1,
+      justifyContent: 'flex-end',
     },
   });

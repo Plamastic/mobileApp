@@ -17,7 +17,8 @@ export const dataStudent = []
 class App extends React.Component{
 
   render() {
-    // AsyncStorage.getItem('work', (err, e) => {
+    
+    // AsyncStorage.getItem('User', (err, e) => {
     //   console.log(JSON.parse(e)) 
     // })
     function ForgotPassword({navigation}) {
@@ -56,7 +57,7 @@ class App extends React.Component{
                     value={email}
                 />
               </View>
-                <Button 
+              <Button 
                   buttonStyle={{
                     backgroundColor: 'rgba(90, 154, 230, 1)',
                     borderColor: 'transparent',
@@ -70,13 +71,13 @@ class App extends React.Component{
                   onPress={() => forgot()}
                 />
               <Button buttonStyle={{
-                    backgroundColor: 'rgba(90, 154, 230, 1)',
-                    borderColor: 'transparent',
-                    borderRadius: 30,
-                    marginBottom: 5,
-                    marginHorizontal: '30%',
-                  }}
-                  onPress={() => navigation.goBack()} title="Quay lại" />
+                  backgroundColor: 'rgba(90, 154, 230, 1)',
+                  borderColor: 'transparent',
+                  borderRadius: 30,
+                  marginBottom: 5,
+                  marginHorizontal: '30%',
+                }}
+                onPress={() => navigation.goBack()} title="Quay lại" />
           </ScrollView>
         )
     }
@@ -104,7 +105,7 @@ class App extends React.Component{
         }
       }
       return(
-        <ScrollView>
+        <View style={{flex: 1,}}>
               <View style={styles.img}><Image
                 style={styles.tinyLogo}
                 source={{
@@ -127,33 +128,35 @@ class App extends React.Component{
                     value={passWord}
                 />
               </View>
+              <View style={{flex: 1,  }}>
                 <Button 
-                  buttonStyle={{
-                    backgroundColor: 'rgba(90, 154, 230, 1)',
-                    borderColor: 'transparent',
-                    borderRadius: 30,
-                    marginBottom: 5,
-                    marginHorizontal: '30%',
-                  }}
-                  size="md"
-                  title="Đăng nhập"
-                  onPress={() => check()}
-                />
-                <Button
                     buttonStyle={{
                       backgroundColor: 'rgba(90, 154, 230, 1)',
                       borderColor: 'transparent',
                       borderRadius: 30,
                       marginBottom: 5,
-                      marginHorizontal: '30%',
+                      marginHorizontal: '20%',
                     }}
                     size="md"
-                    title="Quên mật khẩu"
-                    onPress={() => { 
-                      navigation.navigate('ForgotPassword')
-                    }}
-                />
-        </ScrollView>
+                    title="Đăng nhập"
+                    onPress={() => check()}
+                  />
+                  <Button
+                      buttonStyle={{
+                        backgroundColor: 'rgba(90, 154, 230, 1)',
+                        borderColor: 'transparent',
+                        borderRadius: 30,
+                        marginBottom: 5,
+                        marginHorizontal: '20%',
+                      }}
+                      size="md"
+                      title="Quên mật khẩu"
+                      onPress={() => { 
+                        navigation.navigate('ForgotPassword')
+                      }}
+                  />
+              </View>
+        </View>
       )
     }
     return (
@@ -171,17 +174,16 @@ class App extends React.Component{
 
 const styles = StyleSheet.create({
   In: {
-    flex: 1,
     justifyContent: "center",
-    margin: 20
+    margin: 30
   },
   text: {
-    flex:1,
     justifyContent:'center',
     textAlign: 'center',
     fontSize: 25,
     fontWeight: 'bold',
-    color: "#007AFF"
+    color: "#007AFF",
+    marginTop: 30
   },
   input: {
     height: 40,
@@ -190,7 +192,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     textAlign: 'center',
     marginTop: 5,
-    secureTextEntry: true
+    secureTextEntry: true,
+    color: '#044C8B',
+    backgroundColor: "#ECECEC"
   },
     button: {
     marginLeft: 110,
@@ -203,15 +207,14 @@ const styles = StyleSheet.create({
     paddingHorizontal:20
   },
   tinyLogo: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
   },
   img:{
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 160,
-    marginBottom: 60
+    marginTop: '35%',
+    marginBottom: 50
   }
 
 })

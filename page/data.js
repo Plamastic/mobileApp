@@ -269,22 +269,47 @@ export const User = [
     passWord: 'admin123',
     nameLecturer: 'Trương Đông Nam',
     email: 'Nam01@gmail.com',
-    location: 'TP HCM'
+    location: 'TP HCM',
+    sdt: '0385391708'
   },{
     idUser: 2,
     userName: 'A',
     passWord: 'a',
-    nameLecturer: 'Duy Nam',
+    nameLecturer: 'Nguyễn Duy Nam',
     email: 'Nam02@gmail.com',
-    location: 'Biên Hòa'
+    location: 'Biên Hòa, Đồng Nai',
+    sdt: '0937303880'
   }
 ]
 export const regisList = [
 ]
 
-// AsyncStorage.setItem('User',JSON.stringify(User))
-// AsyncStorage.setItem('Student',JSON.stringify(student))
-// AsyncStorage.setItem('Branch',JSON.stringify(Branch))
-// AsyncStorage.setItem('work',JSON.stringify(work))
-// AsyncStorage.setItem('regisList',JSON.stringify(regisList))
+
 // AsyncStorage.clear()
+
+
+// mergeUsers = async () => {
+//   try {
+//     //save first user
+//     await AsyncStorage.setItem('@MyApp_user', JSON.stringify(USER_1))
+
+//     // merge USER_2 into saved USER_1
+//     await AsyncStorage.mergeItem('@MyApp_user', JSON.stringify(USER_2))
+
+//     // read merged item
+//     const currentUser = await AsyncStorage.getItem('@MyApp_user')
+
+//     console.log(currentUser)
+
+//     // console.log result:
+//     // {
+//     //   name: 'Sarah',
+//     //   age: 21,
+//     //   hobby: 'cars',
+//     //   traits: {
+//     //     eyes: 'green',
+//     //     hair: 'black'
+//     //   }
+//     // }
+//   }
+// }
