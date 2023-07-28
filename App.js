@@ -18,9 +18,9 @@ class App extends React.Component{
 
   render() {
     
-    // AsyncStorage.getItem('User', (err, e) => {
-    //   console.log(JSON.parse(e)) 
-    // })
+    AsyncStorage.getItem('User', (err, e) => {
+      console.log(JSON.parse(e)) 
+    })
     function ForgotPassword({navigation}) {
       const [userName, setUserName]=useState('')
       const [email, setEmail]=useState('')

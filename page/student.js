@@ -11,6 +11,15 @@ import { dataStudent } from '../App';
   LogBox.ignoreAllLogs(true)
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
+  AsyncStorage.getItem('User', (err, e) => {
+    console.log(JSON.parse(e)) 
+  })
+  AsyncStorage.getItem('Work', (err, e) => {
+    console.log(JSON.parse(e)) 
+  })
+  AsyncStorage.getItem('Branch', (err, e) => {
+    console.log(JSON.parse(e)) 
+  })
   const RenderSeparator = () => {
     return (
       <View

@@ -285,31 +285,16 @@ export const regisList = [
 ]
 
 
-// AsyncStorage.clear()
+AsyncStorage.clear()
 
 
-// mergeUsers = async () => {
-//   try {
-//     //save first user
-//     await AsyncStorage.setItem('@MyApp_user', JSON.stringify(USER_1))
+mergeUsers = async () => {
+  try {
+    await AsyncStorage.setItem('Work', JSON.stringify(work))
+    await AsyncStorage.setItem('Branch', JSON.stringify(Branch))
+    await AsyncStorage.setItem('Student', JSON.stringify(student))
+    await AsyncStorage.setItem('User', JSON.stringify(User))
+  }catch{
 
-//     // merge USER_2 into saved USER_1
-//     await AsyncStorage.mergeItem('@MyApp_user', JSON.stringify(USER_2))
-
-//     // read merged item
-//     const currentUser = await AsyncStorage.getItem('@MyApp_user')
-
-//     console.log(currentUser)
-
-//     // console.log result:
-//     // {
-//     //   name: 'Sarah',
-//     //   age: 21,
-//     //   hobby: 'cars',
-//     //   traits: {
-//     //     eyes: 'green',
-//     //     hair: 'black'
-//     //   }
-//     // }
-//   }
-// }
+  }
+}
